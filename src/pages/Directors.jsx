@@ -1,148 +1,275 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Linkedin, Mail, Award, TrendingUp, Users } from 'lucide-react';
+import { Link } from 'react-router-dom'; // Added for navigation
+import { ArrowRight, BookOpen } from 'lucide-react'; // Added icons
 
 const Directors = () => {
 
-  // --- 1. UPDATE YOUR DIRECTORS DATA HERE ---
-  // Upload photos to: src/assets/directors/
-  const directors = [
-    {
-      name: "Name of Director 1",
-      role: "Managing Director",
-      bio: "With over 15 years of experience in healthcare infrastructure, they lead the strategic vision of Vida Life Sciences, focusing on long-term institutional partnerships and regulatory compliance.",
-      expertise: "Strategic Planning, Regulatory Affairs",
-      img: "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=800&auto=format" // Replace with local import
-    },
-    {
-      name: "Name of Director 2",
-      role: "Technical Director",
-      bio: "An expert in biomedical engineering and sterilization technologies. Responsible for overseeing the R&D division and ensuring all equipment meets global safety standards (ISO/IEC).",
-      expertise: "R&D, Product Design, CSSD Engineering",
-      img: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=800&auto=format"
-    },
-    {
-      name: "Name of Director 3",
-      role: "Operations Director",
-      bio: "Oversees the manufacturing and supply chain operations, ensuring that the 'Zero Tolerance for Error' policy is maintained across all production lines.",
-      expertise: "Manufacturing, Supply Chain, Quality Control",
-      img: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800&auto=format"
-    }
-  ];
+  // --- ANIMATION VARIANTS ---
+  const fadeIn = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
+  };
+
+  const slideInLeft = {
+    hidden: { opacity: 0, x: -30 },
+    visible: { opacity: 1, x: 0, transition: { duration: 1, ease: "easeOut" } }
+  };
+
+  const slideInRight = {
+    hidden: { opacity: 0, x: 30 },
+    visible: { opacity: 1, x: 0, transition: { duration: 1, ease: "easeOut" } }
+  };
 
   return (
-    <div className="w-full bg-slate-50 min-h-screen pt-24 lg:pt-32 pb-24">
+    <div className="w-full bg-white min-h-screen pt-24 pb-0 overflow-x-hidden font-sans">
       
-      {/* 1. HERO SECTION */}
-      <div className="container mx-auto px-6 mb-20">
+      {/* =========================================================
+          1. PAGE HEADER
+      ========================================================= */}
+      <section className="container mx-auto px-6 mb-16 lg:mb-24">
         <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="max-w-4xl"
+          initial="hidden"
+          animate="visible"
+          variants={fadeIn}
+          className="max-w-4xl mx-auto text-center border-b border-slate-100 pb-12"
         >
-          <div className="flex items-center gap-3 mb-6">
-            <div className="h-[2px] w-12 bg-sky-600"></div>
-            <span className="text-sky-700 font-bold uppercase tracking-widest text-xs">
-              Leadership & Governance
-            </span>
-          </div>
-          <h1 className="text-4xl lg:text-6xl font-bold text-slate-900 leading-tight mb-8">
-            Guided by <br/>
-            <span className="text-slate-400">Experience & Discipline.</span>
+          <span className="inline-block py-1 px-3 mb-6 border border-sky-100 bg-sky-50 text-sky-800 text-xs font-bold tracking-[0.2em] uppercase rounded-sm">
+            Board of Directors
+          </span>
+          
+          <h1 className="text-4xl lg:text-5xl font-bold text-slate-900 leading-tight mb-8">
+            Leadership & Governance
           </h1>
-          <p className="text-xl text-slate-600 leading-relaxed max-w-3xl border-l-4 border-slate-300 pl-6">
-            Vida Life Sciences benefits from a multidisciplinary leadership structure that integrates clinical understanding, CSSD operational expertise, and manufacturing precision.
+          
+          <p className="text-lg text-slate-600 leading-relaxed max-w-3xl mx-auto">
+            At Vida Life Sciences, leadership is structured around clinical safety, operational precision, and manufacturing integrity. Our directors provide the governance required to maintain compliance with national and international medical standards.
           </p>
         </motion.div>
-      </div>
+      </section>
 
-      {/* 2. DIRECTORS GRID */}
-      <section className="container mx-auto px-6 mb-24">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {directors.map((leader, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.2 }}
-              className="bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 group hover:shadow-xl transition-all duration-500"
+
+      {/* =========================================================
+          2. DIRECTOR 1: DR. ONKAR A. YADAV
+          *** ADDED BUTTON HERE ***
+      ========================================================= */}
+      <section className="w-full py-16 lg:py-24 border-b border-slate-100">
+        <div className="container mx-auto px-6">
+          <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center">
+            
+            {/* --- LEFT: PORTRAIT (40%) --- */}
+            <motion.div 
+              className="w-full lg:w-[40%] flex justify-center lg:justify-end"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={slideInLeft}
             >
-              {/* Image Area */}
-              <div className="h-80 overflow-hidden relative">
+              <div className="relative w-full max-w-md aspect-[3/4] overflow-hidden rounded-lg shadow-xl border border-slate-200">
+                <div className="absolute inset-0 border-[6px] border-white/50 z-10 pointer-events-none"></div>
                 <img 
-                  src={leader.img} 
-                  alt={leader.name} 
-                  className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105 filter grayscale group-hover:grayscale-0" 
+                  src="/images/director_01.png" 
+                  alt="Dr. Onkar A. Yadav" 
+                  className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-[1.5s] ease-out"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-60"></div>
-                <div className="absolute bottom-4 left-4 text-white">
-                  <div className="text-xs font-bold uppercase tracking-wider text-sky-400 mb-1">{leader.role}</div>
-                  <h3 className="text-xl font-bold">{leader.name}</h3>
-                </div>
-              </div>
-
-              {/* Content Area */}
-              <div className="p-8">
-                <p className="text-slate-600 leading-relaxed mb-6 text-sm">
-                  {leader.bio}
-                </p>
-                
-                <div className="mb-6">
-                  <h4 className="text-xs font-bold text-slate-400 uppercase mb-2">Core Expertise</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {leader.expertise.split(', ').map((skill, i) => (
-                      <span key={i} className="px-2 py-1 bg-slate-100 text-slate-600 text-xs font-medium rounded">
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Social Actions */}
-                <div className="flex gap-4 pt-6 border-t border-slate-100">
-                  <button className="text-slate-400 hover:text-sky-600 transition-colors">
-                    <Linkedin size={20} />
-                  </button>
-                  <button className="text-slate-400 hover:text-sky-600 transition-colors">
-                    <Mail size={20} />
-                  </button>
-                </div>
               </div>
             </motion.div>
-          ))}
+
+            {/* --- RIGHT: DOSSIER (60%) --- */}
+            <motion.div 
+              className="w-full lg:w-[60%]"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={slideInRight}
+            >
+              <div className="mb-4">
+                <span className="text-sky-700 font-bold text-xs tracking-widest uppercase border-l-4 border-sky-600 pl-3">
+                  Clinical Governance & Infection Control
+                </span>
+              </div>
+
+              <h2 className="text-3xl font-bold text-slate-900 mb-2">
+                Dr. Onkar A. Yadav
+              </h2>
+              <h3 className="text-lg text-slate-500 font-medium mb-8">
+                Director – Infection Prevention & Regulatory Affairs
+              </h3>
+              
+              <div className="w-20 h-[1px] bg-slate-200 mb-8"></div>
+
+              <div className="space-y-6 text-slate-600 leading-relaxed text-base lg:text-lg mb-8">
+                <p>
+                  Dr. Onkar A. Yadav provides clinical and regulatory leadership to Vida Life Sciences, bringing extensive experience in Infection Prevention and Control (IPC) across diverse healthcare environments. His background includes formal education in Pharmacy and Pharmacology, complemented by advanced training in medico-legal studies.
+                </p>
+                <p>
+                  His scope of work includes the development of CSSD protocols, antimicrobial stewardship programs, and patient safety initiatives. Dr. Yadav’s governance ensures that all Vida solutions align with regulatory expectations, clinical safety standards, and long-term healthcare outcomes.
+                </p>
+              </div>
+
+              {/* --- NEW BUTTON: View Research & Profile --- */}
+              <Link 
+                to="/directors/dr-onkar-yadav" 
+                className="inline-flex items-center gap-3 px-6 py-3 bg-sky-700 text-white font-semibold rounded hover:bg-sky-800 transition-all duration-300 shadow-lg shadow-sky-900/10 hover:shadow-sky-900/20 group"
+              >
+                <BookOpen size={18} className="text-sky-200" />
+                <span>View Publications & Research</span>
+                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+              </Link>
+
+            </motion.div>
+
+          </div>
         </div>
       </section>
 
-      {/* 3. GOVERNANCE PHILOSOPHY */}
-      <section className="w-full bg-slate-900 text-white py-24">
-        <div className="container mx-auto px-6">
-          <div className="max-w-4xl mx-auto text-center mb-16">
-            <h2 className="text-3xl font-bold mb-6">A Framework of Accountability</h2>
-            <p className="text-slate-400 leading-relaxed text-lg">
-              Our governance framework supports evidence-based decision-making, long-term stability, and accountable healthcare partnerships.
-            </p>
-          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="p-8 bg-slate-800/50 rounded-xl border border-slate-700">
-              <Award className="text-sky-500 mb-4" size={32} />
-              <h3 className="text-xl font-bold mb-3">Clinical Integrity</h3>
-              <p className="text-slate-400 text-sm">Decisions are driven by patient safety data and infection control protocols, not just profitability.</p>
-            </div>
-            <div className="p-8 bg-slate-800/50 rounded-xl border border-slate-700">
-              <TrendingUp className="text-emerald-500 mb-4" size={32} />
-              <h3 className="text-xl font-bold mb-3">Sustainable Growth</h3>
-              <p className="text-slate-400 text-sm">We focus on long-term infrastructure planning rather than short-term market trends.</p>
-            </div>
-            <div className="p-8 bg-slate-800/50 rounded-xl border border-slate-700">
-              <Users className="text-purple-500 mb-4" size={32} />
-              <h3 className="text-xl font-bold mb-3">Unified Oversight</h3>
-              <p className="text-slate-400 text-sm">Leadership is directly involved in quality audits, ensuring top-to-bottom compliance.</p>
-            </div>
+      {/* =========================================================
+          3. DIRECTOR 2: MR. DHANANJAY SAWANT
+      ========================================================= */}
+      <section className="w-full py-16 lg:py-24 bg-slate-50 border-b border-slate-100">
+        <div className="container mx-auto px-6">
+          <div className="flex flex-col-reverse lg:flex-row gap-12 lg:gap-20 items-center">
+            
+            {/* --- LEFT: DOSSIER --- */}
+            <motion.div 
+              className="w-full lg:w-[60%]"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={slideInLeft}
+            >
+              <div className="mb-4">
+                <span className="text-sky-700 font-bold text-xs tracking-widest uppercase border-l-4 border-sky-600 pl-3">
+                  CSSD Design & Strategic Operations
+                </span>
+              </div>
+
+              <h2 className="text-3xl font-bold text-slate-900 mb-2">
+                Mr. Dhananjay Sawant
+              </h2>
+              <h3 className="text-lg text-slate-500 font-medium mb-8">
+                Director – Operations & Strategic Execution
+              </h3>
+              
+              <div className="w-20 h-[1px] bg-slate-200 mb-8"></div>
+
+              <div className="space-y-6 text-slate-600 leading-relaxed text-base lg:text-lg">
+                <p>
+                  Mr. Dhananjay Sawant specializes in the architectural planning, implementation, and execution of CSSD projects. His career focuses on translating complex clinical sterilization requirements into scalable, practical hospital infrastructure solutions.
+                </p>
+                <p>
+                  With expertise spanning turnkey project management and hospital infrastructure planning, Mr. Sawant ensures that sterilization workflows operate efficiently within real-world hospital constraints. His leadership oversees equipment integration, operational optimization, and long-term maintenance partnerships.
+                </p>
+              </div>
+            </motion.div>
+
+            {/* --- RIGHT: PORTRAIT --- */}
+            <motion.div 
+              className="w-full lg:w-[40%] flex justify-center lg:justify-start"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={slideInRight}
+            >
+              <div className="relative w-full max-w-md aspect-[3/4] overflow-hidden rounded-lg shadow-xl border border-slate-200 bg-white">
+                <div className="absolute inset-0 border-[6px] border-white/50 z-10 pointer-events-none"></div>
+                <img 
+                  src="/images/director_02.png" 
+                  alt="Mr. Dhananjay Sawant" 
+                  className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-[1.5s] ease-out"
+                />
+              </div>
+            </motion.div>
+
           </div>
         </div>
+      </section>
+
+
+      {/* =========================================================
+          4. DIRECTOR 3: MR. SANJAY KHANDAGALE
+      ========================================================= */}
+      <section className="w-full py-16 lg:py-24 border-b border-slate-100">
+        <div className="container mx-auto px-6">
+          <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center">
+            
+            {/* --- LEFT: PORTRAIT --- */}
+            <motion.div 
+              className="w-full lg:w-[40%] flex justify-center lg:justify-end"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={slideInLeft}
+            >
+              <div className="relative w-full max-w-md aspect-[3/4] overflow-hidden rounded-lg shadow-xl border border-slate-200">
+                <div className="absolute inset-0 border-[6px] border-white/50 z-10 pointer-events-none"></div>
+                <img 
+                  src="/images/director 3rd.jpeg" 
+                  alt="Mr. Sanjay Khandagale" 
+                  className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-[1.5s] ease-out"
+                  onError={(e) => { e.target.src = "/images/director_02.png" }} 
+                />
+              </div>
+            </motion.div>
+
+            {/* --- RIGHT: DOSSIER --- */}
+            <motion.div 
+              className="w-full lg:w-[60%]"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={slideInRight}
+            >
+              <div className="mb-4">
+                <span className="text-sky-700 font-bold text-xs tracking-widest uppercase border-l-4 border-sky-600 pl-3">
+                  Manufacturing Excellence & Quality Systems
+                </span>
+              </div>
+
+              <h2 className="text-3xl font-bold text-slate-900 mb-2">
+                Mr. Sanjay Khandagale
+              </h2>
+              <h3 className="text-lg text-slate-500 font-medium mb-8">
+                Director – Manufacturing, Equipment & Quality Systems
+              </h3>
+              
+              <div className="w-20 h-[1px] bg-slate-200 mb-8"></div>
+
+              <div className="space-y-6 text-slate-600 leading-relaxed text-base lg:text-lg">
+                <p>
+                  Mr. Sanjay Khandagale leads the manufacturing and technical operations at Vida Life Sciences, ensuring the durability and safety of all medical equipment. His academic foundation in production studies underpins a disciplined approach to material selection (SS 304/316L) and process optimization.
+                </p>
+                <p>
+                  He oversees the validation of CSSD equipment, ensuring strict compliance with healthcare standards. Under his leadership, Vida Life Sciences has expanded its in-house manufacturing capabilities, reinforcing the organization’s commitment to quality-driven, compliant healthcare manufacturing.
+                </p>
+              </div>
+            </motion.div>
+
+          </div>
+        </div>
+      </section>
+
+
+      {/* =========================================================
+          5. FOOTER SUMMARY
+      ========================================================= */}
+      <section className="bg-slate-900 py-20 text-center px-6">
+        <motion.div 
+          className="max-w-4xl mx-auto"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeIn}
+        >
+          <h2 className="text-2xl lg:text-3xl font-bold text-white mb-6">Collective Governance Approach</h2>
+          <p className="text-slate-400 text-lg leading-relaxed mb-8">
+            Together, the directors provide end-to-end leadership across the healthcare sterilization lifecycle—from clinical governance and infection control, through CSSD design and hospital operations, to manufacturing quality and regulatory compliance.
+          </p>
+          <p className="text-xs text-slate-500 uppercase tracking-widest font-bold">
+            Vida Life Sciences Pvt. Ltd. • Board of Directors
+          </p>
+        </motion.div>
       </section>
 
     </div>

@@ -1,6 +1,36 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Building, Map, Users, ArrowRight, Phone } from 'lucide-react';
+import React, { useEffect, useRef } from 'react';
+import { motion, useInView, useMotionValue, useSpring } from 'framer-motion';
+import { Building, Map, Users, Phone } from 'lucide-react';
+
+// --- ROBUST ANIMATED COUNTER ---
+const AnimatedCounter = ({ value, suffix = "" }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-50px" }); 
+  
+  const motionValue = useMotionValue(0);
+  const springValue = useSpring(motionValue, {
+    damping: 30,
+    stiffness: 100,
+    duration: 2
+  });
+
+  useEffect(() => {
+    if (isInView) {
+      motionValue.set(value);
+    }
+  }, [isInView, value, motionValue]);
+
+  useEffect(() => {
+    const unsubscribe = springValue.on("change", (latest) => {
+      if (ref.current) {
+        ref.current.textContent = Math.round(latest) + suffix;
+      }
+    });
+    return () => unsubscribe();
+  }, [springValue, suffix]);
+
+  return <span ref={ref} className="inline-block min-w-[60px]">0{suffix}</span>;
+};
 
 const ScaleSection = () => {
   
@@ -8,21 +38,24 @@ const ScaleSection = () => {
     {
       id: 1,
       label: "Partner Hospitals",
-      value: "300+",
+      number: 300,      
+      suffix: "+",      
       desc: "Serving Government, Trust, and Private institutions.",
       icon: <Building className="text-sky-500" size={24} />
     },
     {
       id: 2,
       label: "Geographic Reach",
-      value: "15+",
+      number: 15,
+      suffix: "+",
       desc: "Operational presence across major Indian states.",
       icon: <Map className="text-sky-500" size={24} />
     },
     {
       id: 3,
       label: "Daily Impact",
-      value: "50k",
+      number: 50,
+      suffix: "k",
       desc: "Surgical instruments processed sterile every single day.",
       icon: <Users className="text-sky-500" size={24} />
     },
@@ -32,7 +65,7 @@ const ScaleSection = () => {
     <section className="w-full bg-white pt-24 pb-0">
       <div className="container mx-auto px-6">
         
-        {/* --- PART 1: THE NUMBERS --- */}
+        {/* --- PART 1: THE ANIMATED NUMBERS --- */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-32 border-b border-slate-100 pb-16">
           {stats.map((stat, index) => (
             <motion.div
@@ -44,7 +77,7 @@ const ScaleSection = () => {
               className="text-center md:text-left group"
             >
               <div className="flex items-center justify-center md:justify-start gap-3 mb-4 opacity-80 group-hover:opacity-100 transition-opacity">
-                <div className="p-2 bg-sky-50 rounded-lg">
+                <div className="p-2 bg-sky-50 rounded-lg group-hover:bg-sky-100 transition-colors">
                   {stat.icon}
                 </div>
                 <span className="text-sm font-bold text-slate-500 uppercase tracking-widest">
@@ -52,8 +85,8 @@ const ScaleSection = () => {
                 </span>
               </div>
               
-              <div className="text-6xl lg:text-7xl font-light text-slate-900 mb-4 tracking-tight">
-                {stat.value}
+              <div className="text-6xl lg:text-7xl font-light text-slate-900 mb-4 tracking-tight flex justify-center md:justify-start">
+                  <AnimatedCounter value={stat.number} suffix={stat.suffix} />
               </div>
               
               <p className="text-slate-500 leading-relaxed max-w-xs mx-auto md:mx-0">
@@ -63,7 +96,7 @@ const ScaleSection = () => {
           ))}
         </div>
 
-        {/* --- PART 2: THE CTA (Blue Bridge) --- */}
+        {/* --- PART 2: THE CTA (Brochure Button Removed) --- */}
         <motion.div 
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -86,14 +119,10 @@ const ScaleSection = () => {
           </div>
 
           <div className="relative z-10 flex flex-col sm:flex-row gap-4 shrink-0">
-             <button className="px-8 py-4 bg-sky-600 text-white font-bold rounded hover:bg-sky-500 transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-sky-900/50">
-               <Phone size={20} />
-               Schedule an Audit
-             </button>
-             <button className="px-8 py-4 bg-transparent border border-slate-600 text-white font-bold rounded hover:bg-white hover:text-slate-900 transition-all duration-300 flex items-center justify-center gap-2">
-               Download Brochure
-               <ArrowRight size={20} />
-             </button>
+              <a href="/contact" className="px-8 py-4 bg-sky-600 text-white font-bold rounded hover:bg-sky-500 transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-sky-900/50">
+                <Phone size={20} />
+                Schedule an Audit
+              </a>
           </div>
 
         </motion.div>

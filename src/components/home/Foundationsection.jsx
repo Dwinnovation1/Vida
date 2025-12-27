@@ -1,134 +1,156 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Building2, Stethoscope, Scale, ArrowRight } from 'lucide-react';
+import { CheckCircle2, ArrowRight, ShieldCheck, Activity } from 'lucide-react';
 
 const FoundationSection = () => {
   
-  // The 3 Pillars of Vida
-  const pillars = [
-    {
-      id: 1,
-      icon: <Building2 size={28} />,
-      title: "Established Stability",
-      desc: "Founded in 2011, we bring over a decade of operational continuity. We are not a startup; we are a long-term infrastructure partner.",
-      delay: 0.2
-    },
-    {
-      id: 2,
-      icon: <Stethoscope size={28} />,
-      title: "Exclusive Healthcare Focus",
-      desc: "We do not service industrial or food sectors. 100% of our protocols are designed for surgical instruments and patient-critical environments.",
-      delay: 0.4
-    },
-    {
-      id: 3,
-      icon: <Scale size={28} />,
-      title: "Governance Driven",
-      desc: "Our operations are built on a framework of legal compliance, auditable workflows, and absolute adherence to the Indian Medical Devices Rules.",
-      delay: 0.6
-    }
+  // Data Points
+  const highlights = [
+    "Market Leadership in Sterile Processing",
+    "ISO Class 8 Cleanroom Infrastructure",
+    "Partner to 150+ Hospitals & Surgical Centers",
+    "End-to-End Digital Traceability"
   ];
 
   return (
-    <section className="w-full py-24 lg:py-32 bg-slate-50 border-b border-slate-200">
-      <div className="container mx-auto px-6">
+    <section className="w-full py-24 lg:py-32 bg-white overflow-hidden" id="about">
+      <div className="container mx-auto px-6 lg:px-12">
         
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
           
-          {/* LEFT: The Manifesto (Sticky on Desktop) */}
-          <div className="lg:sticky lg:top-32">
+          {/* --- LEFT: NARRATIVE (About Us) --- */}
+          <div className="order-2 lg:order-1">
             
-            {/* Section Tag */}
+            {/* Tag */}
             <motion.div 
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="flex items-center gap-3 mb-8"
+              className="flex items-center gap-3 mb-6"
             >
-              <div className="w-12 h-[2px] bg-sky-600"></div>
-              <span className="text-sky-700 font-bold tracking-widest uppercase text-xs">
-                Our Foundation
-              </span>
+               <span className="h-[2px] w-8 bg-sky-600"></span>
+               <span className="text-sky-600 font-bold uppercase tracking-[0.2em] text-xs">
+                 Who We Are
+               </span>
             </motion.div>
 
             {/* Headline */}
             <motion.h2 
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-3xl lg:text-5xl font-bold text-slate-900 leading-tight mb-8"
+              transition={{ delay: 0.2 }}
+              className="text-4xl lg:text-6xl font-bold text-slate-900 mb-8 leading-[1.1]"
             >
-              Built on the Principles of <br/>
-              <span className="text-sky-600">Clinical Governance.</span>
+              The Gold Standard for <br/>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-600 to-blue-800">
+                Medical Safety.
+              </span>
             </motion.h2>
 
-            {/* Editorial Text */}
+            {/* Paragraph */}
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="text-lg text-slate-600 leading-relaxed mb-10"
+              transition={{ delay: 0.3 }}
+              className="text-lg text-slate-600 leading-relaxed mb-10 font-medium max-w-lg"
             >
-              In an industry often driven by cost-cutting, Vida Life Sciences stands for <strong>regulatory discipline</strong>. 
-              We understand that sterilization is the first line of defense in patient safety.
+              Vida Life Science is not just a sterilization service; we are a critical extension of your hospital’s infection control protocol. 
+              <br/><br/>
+              We operate India's most advanced centralized sterilization hubs, ensuring that every surgical instrument entering your OT is biologically safe, legally compliant, and functionally perfect.
             </motion.p>
 
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-              className="text-lg text-slate-600 leading-relaxed mb-10"
-            >
-              Our infrastructure is designed not just to meet current standards, but to future-proof your hospital against evolving infection control regulations.
-            </motion.p>
+            {/* Feature List */}
+            <div className="space-y-5 mb-12">
+              {highlights.map((item, index) => (
+                <motion.div 
+                  key={index}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.4 + (index * 0.1) }}
+                  className="flex items-center gap-4 group"
+                >
+                  <div className="w-6 h-6 rounded-full bg-sky-50 flex items-center justify-center text-sky-600 group-hover:bg-sky-600 group-hover:text-white transition-colors duration-300">
+                    <CheckCircle2 size={14} strokeWidth={3} />
+                  </div>
+                  <span className="text-slate-700 font-semibold group-hover:text-sky-700 transition-colors">
+                    {item}
+                  </span>
+                </motion.div>
+              ))}
+            </div>
 
-            {/* Read More Link */}
-            <motion.a 
-              href="#about"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              className="inline-flex items-center gap-2 text-sky-700 font-bold hover:gap-4 transition-all duration-300 group"
+            {/* CTA Button */}
+            <motion.button 
+              whileHover={{ x: 10 }}
+              className="flex items-center gap-3 text-slate-900 font-bold uppercase tracking-widest text-sm group"
             >
-              Read Our Corporate Profile
-              <ArrowRight size={18} className="group-hover:text-sky-500" />
-            </motion.a>
+              Read Corporate Profile
+              <span className="w-10 h-10 flex items-center justify-center bg-slate-100 rounded-full group-hover:bg-sky-600 group-hover:text-white transition-all duration-300 shadow-sm">
+                 <ArrowRight size={16} />
+              </span>
+            </motion.button>
           </div>
 
-          {/* RIGHT: The Pillars (Cards) */}
-          <div className="flex flex-col gap-6">
-            {pillars.map((item) => (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: item.delay, ease: "easeOut" }}
-                className="bg-white p-8 lg:p-10 rounded-xl border border-slate-200 shadow-sm hover:shadow-xl hover:border-sky-200 hover:-translate-y-1 transition-all duration-300 group"
-              >
-                <div className="flex items-start gap-6">
-                  {/* Icon Box */}
-                  <div className="w-14 h-14 bg-sky-50 rounded-lg flex items-center justify-center text-sky-600 group-hover:bg-sky-600 group-hover:text-white transition-colors duration-300 shrink-0">
-                    {item.icon}
-                  </div>
+          {/* --- RIGHT: VISUAL (Shutter Animation & Image) --- */}
+          <div className="order-1 lg:order-2">
+            <div className="relative pl-0 lg:pl-10">
+               
+               {/* 1. Image Container */}
+               <div className="relative rounded-2xl overflow-hidden aspect-[4/5] lg:aspect-square shadow-2xl shadow-slate-200">
                   
-                  {/* Text Content */}
-                  <div>
-                    <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-sky-700 transition-colors">
-                      {item.title}
-                    </h3>
-                    <p className="text-slate-600 leading-relaxed">
-                      {item.desc}
-                    </p>
+                  {/* MAIN IMAGE: Sterile Processing / Lab Context */}
+                  <motion.img 
+                    initial={{ scale: 1.2 }}
+                    whileInView={{ scale: 1 }}
+                    transition={{ duration: 1.5, ease: "easeOut" }}
+                    src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=1000&auto=format" 
+                    alt="Sterile Facility Medical Equipment" 
+                    className="w-full h-full object-cover"
+                  />
+
+                  {/* 2. Shutter Reveal (Parda) */}
+                  {/* Ye white layer image ke upar hai aur load hone par hat jayegi */}
+                  <motion.div 
+                    initial={{ height: "100%" }}
+                    whileInView={{ height: "0%" }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1] }} 
+                    className="absolute top-0 left-0 w-full bg-white z-20"
+                  />
+
+                  {/* Overlay Gradient for Depth */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/30 to-transparent pointer-events-none" />
+               </div>
+
+               {/* 3. Floating Stats Badge (3D Feel) */}
+               <motion.div 
+                 initial={{ opacity: 0, y: 50, x: -20 }}
+                 whileInView={{ opacity: 1, y: 0, x: 0 }}
+                 viewport={{ once: true }}
+                 transition={{ delay: 0.8, duration: 0.8 }}
+                 className="absolute -bottom-8 -left-4 lg:-bottom-10 lg:left-0 z-30"
+               >
+                  <div className="bg-white p-6 lg:p-8 rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] border-l-4 border-sky-600 flex items-center gap-5 max-w-xs">
+                     <div className="bg-sky-50 p-4 rounded-full text-sky-600">
+                        <Activity size={28} />
+                     </div>
+                     <div>
+                        <p className="text-slate-400 text-[10px] font-bold uppercase tracking-wider mb-1">Daily Throughput</p>
+                        <p className="text-slate-900 text-3xl font-bold leading-none">50k+</p>
+                        <p className="text-slate-500 text-xs mt-1 font-medium">Surgical Instruments</p>
+                     </div>
                   </div>
-                </div>
-              </motion.div>
-            ))}
+               </motion.div>
+
+               {/* Decorative Background Dots */}
+               <div className="absolute -top-12 -right-12 z-0 opacity-30">
+                  <div className="w-40 h-40 bg-[radial-gradient(circle,_#0ea5e9_2px,_transparent_2px)] bg-[size:12px_12px]" />
+               </div>
+
+            </div>
           </div>
 
         </div>

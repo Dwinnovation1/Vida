@@ -1,203 +1,300 @@
-import React, { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { motion } from 'framer-motion';
-import { Settings, Scan, Waves, Thermometer, PackageCheck } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from 'framer-motion';
+import { Settings, Scan, Waves, Thermometer, PackageCheck, Zap, Layers, ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
 
-gsap.registerPlugin(ScrollTrigger);
+// --- 3D TILT CARD COMPONENT ---
+const TiltCard = ({ src, title, sub }) => {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
 
+  const mouseX = useSpring(x, { stiffness: 150, damping: 15 });
+  const mouseY = useSpring(y, { stiffness: 150, damping: 15 });
+
+  const rotateX = useTransform(mouseY, [-0.5, 0.5], ["10deg", "-10deg"]);
+  const rotateY = useTransform(mouseX, [-0.5, 0.5], ["-10deg", "10deg"]);
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const mouseXFromCenter = e.clientX - rect.left - width / 2;
+    const mouseYFromCenter = e.clientY - rect.top - height / 2;
+    x.set(mouseXFromCenter / width);
+    y.set(mouseYFromCenter / height);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  return (
+    <motion.div
+      style={{ perspective: 1000 }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className="relative w-full h-full"
+    >
+      <motion.div
+        style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+        className="w-full h-full relative rounded-2xl overflow-hidden shadow-lg shadow-slate-200 border border-slate-100"
+      >
+        <img src={src} alt={title} className="w-full h-full object-cover transition-transform duration-700 hover:scale-110" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent" />
+        <motion.div 
+           style={{ translateZ: 50 }}
+           className="absolute bottom-6 left-6"
+        >
+           <div className="bg-white/20 backdrop-blur-md border border-white/30 px-4 py-2 rounded-lg shadow-sm">
+             <p className="text-white font-bold text-lg">{title}</p>
+             <p className="text-slate-100 text-xs uppercase tracking-wider">{sub}</p>
+           </div>
+        </motion.div>
+      </motion.div>
+    </motion.div>
+  );
+};
+
+// --- MAIN COMPONENT ---
 const TechnicalCapability = () => {
-  const processRef = useRef(null);
-  const trackRef = useRef(null);
+  const [activeStep, setActiveStep] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const autoPlayRef = useRef(null);
 
-  // DATA: The 5-Step Cycle (Clinical Language)
+  // --- UPDATED IMAGE DATA ---
   const steps = [
     {
       id: "01",
       title: "Decontamination",
-      desc: "Bio-burden reduction using automated washer-disinfectors with enzymatic detergents.",
-      icon: <Waves size={32} />
+      desc: "Removal of bio-burden using automated washer-disinfectors and enzymatic detergents in the dirty zone.",
+      icon: <Waves size={32} />,
+      color: "text-blue-600",
+      bg: "bg-blue-50",
+      // Image: Washing medical instruments / wet zone
+      img: "https://images.unsplash.com/photo-1551076805-e1869033e561?q=80&w=1000&auto=format&fit=crop"
     },
     {
       id: "02",
       title: "Ultrasonic Cleaning",
-      desc: "Cavitation technology removes microscopic debris from instrument hinges and crevices.",
-      icon: <Settings size={32} />
+      desc: "High-frequency sound waves create cavitation to remove microscopic debris from complex instrument crevices.",
+      icon: <Zap size={32} />,
+      color: "text-amber-500",
+      bg: "bg-amber-50",
+      // Image: High tech lab equipment / clean stainless steel
+      img: "/ultraimg.jpeg"
     },
     {
       id: "03",
       title: "Visual Inspection",
-      desc: "Digital magnification and illuminated testing of instrument integrity and functionality.",
-      icon: <Scan size={32} />
+      desc: "Digital magnification and illuminated testing to verify cleanliness and functionality before packaging.",
+      icon: <Scan size={32} />,
+      color: "text-purple-600",
+      bg: "bg-purple-50",
+      // Image: Person inspecting with microscope or magnifying glass
+      img: "https://images.unsplash.com/photo-1576086213369-97a306d36557?q=80&w=1000&auto=format&fit=crop"
     },
     {
       id: "04",
       title: "Sterilization Cycle",
-      desc: "Steam (Autoclave) or Low-Temp Plasma sterilization validating strict kill-time parameters.",
-      icon: <Thermometer size={32} />
+      desc: "Validated Steam (Autoclave) or Low-Temp Plasma sterilization cycles to achieve 100% SAL.",
+      icon: <Thermometer size={32} />,
+      color: "text-rose-500",
+      bg: "bg-rose-50",
+      // Image: Industrial Autoclave / Sterile Machine Interface
+      img: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=1000&auto=format&fit=crop"
     },
     {
       id: "05",
       title: "Sterile Storage",
-      desc: "Packaging in ISO Class 8 Cleanrooms to maintain sterility until the moment of surgery.",
-      icon: <PackageCheck size={32} />
+      desc: "Final packaging and storage in ISO Class 8 Cleanrooms to maintain the sterile barrier until surgery.",
+      icon: <PackageCheck size={32} />,
+      color: "text-emerald-600",
+      bg: "bg-emerald-50",
+      // Image: Sterile Blue Packaging / Cleanroom Storage
+      img: "/sterileimg.jpeg"
     },
   ];
 
-  // GSAP Horizontal Scroll Logic
+  // --- AUTO PLAY LOGIC ---
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      const track = trackRef.current;
-      const cardWidth = track.offsetWidth; 
-      const amountToScroll = cardWidth - window.innerWidth;
+    if (!isPaused) {
+      autoPlayRef.current = setInterval(() => {
+        setActiveStep((prev) => (prev + 1) % steps.length);
+      }, 5000); // 5 Seconds per slide
+    }
+    return () => clearInterval(autoPlayRef.current);
+  }, [isPaused, steps.length]);
 
-      gsap.to(track, {
-        x: -amountToScroll,
-        ease: "none",
-        scrollTrigger: {
-          trigger: processRef.current,
-          pin: true,
-          scrub: 1,
-          end: () => "+=" + (track.offsetWidth - window.innerWidth),
-          invalidateOnRefresh: true
-        }
-      });
-    }, processRef);
-    return () => ctx.revert();
-  }, []);
+  const handleNext = () => {
+    setActiveStep((prev) => (prev + 1) % steps.length);
+    setIsPaused(true);
+    setTimeout(() => setIsPaused(false), 8000);
+  };
+
+  const handlePrev = () => {
+    setActiveStep((prev) => (prev - 1 + steps.length) % steps.length);
+    setIsPaused(true);
+    setTimeout(() => setIsPaused(false), 8000);
+  };
 
   return (
-    <section className="w-full bg-white overflow-hidden">
+    <section className="bg-white overflow-hidden">
       
-      {/* --- PART 1: INFRASTRUCTURE (The Machinery) --- */}
-      <div className="container mx-auto px-6 py-24 lg:py-32">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          
-          {/* Narrative */}
-          <div className="order-2 lg:order-1">
-            <motion.div 
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="flex items-center gap-3 mb-6"
-            >
-              <div className="w-12 h-[2px] bg-sky-600"></div>
-              <span className="text-sky-700 font-bold tracking-widest uppercase text-xs">
-                Infrastructure
-              </span>
-            </motion.div>
+      {/* --- PART 1: INFRASTRUCTURE (3D Tilt Grid) --- */}
+      <div className="container mx-auto px-6 py-20 lg:py-24 border-b border-slate-50">
+         <div className="flex flex-col lg:flex-row gap-16 items-center">
+            
+            {/* Left Narrative */}
+            <div className="lg:w-1/3">
+               <div className="flex items-center gap-2 mb-6">
+                  <Layers className="text-sky-600" size={20} />
+                  <span className="text-sky-600 font-bold tracking-widest uppercase text-xs">
+                    Infrastructure
+                  </span>
+               </div>
+               
+               <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 mb-6 leading-tight">
+                 Machinery meets <br/>
+                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-600 to-blue-600">
+                   Intelligence.
+                 </span>
+               </h2>
+               <p className="text-slate-600 text-lg leading-relaxed mb-8">
+                 We operate India's most advanced CSSD hubs with segregated zones. Our facility features automated washer disinfectors and plasma sterilizers.
+               </p>
+            </div>
 
-            <h2 className="text-3xl lg:text-5xl font-bold text-slate-900 leading-tight mb-8">
-              Medical-Grade <br/>
-              <span className="text-slate-400">Processing Capability.</span>
-            </h2>
-
-            <p className="text-lg text-slate-600 leading-relaxed mb-8">
-              We operate India's most advanced CSSD hubs. Our facilities are designed with segregated 
-              <strong className="text-slate-900"> 'Dirty'</strong> (Decontamination) and 
-              <strong className="text-slate-900"> 'Clean'</strong> (Sterile) zones to prevent cross-contamination.
-            </p>
-
-            <ul className="space-y-4 mb-10">
-              {['Automated Washer Disinfectors', 'Steam & Plasma Sterilizers', 'SS 316L Furniture Standards'].map((item, i) => (
-                <li key={i} className="flex items-center gap-3 text-slate-700 font-medium">
-                  <div className="w-2 h-2 bg-sky-500 rounded-full" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Visual Grid (Bento Style) */}
-          <div className="order-1 lg:order-2 grid grid-cols-2 gap-4 h-[500px]">
-            {/* Image 1: Main Machinery */}
-            <div className="col-span-2 h-[60%] bg-slate-100 rounded-2xl overflow-hidden relative group">
-               <img 
-                 src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=1000&auto=format" 
-                 alt="Autoclave Machine" 
-                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-               />
-               <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur px-3 py-1 text-xs font-bold text-slate-900 rounded">
-                 Steam Autoclave Systems
+            {/* Right 3D Grid - UPDATED IMAGES */}
+            <div className="lg:w-2/3 grid grid-cols-1 md:grid-cols-2 gap-6 h-[500px]">
+               <div className="h-full">
+                  <TiltCard 
+                    // Image: Modern Autoclave Machine
+                    src="https://plus.unsplash.com/premium_photo-1661281397737-9b5d75b93916?q=80&w=1000&auto=format&fit=crop"
+                    title="Autoclave Units"
+                    sub="Steam Sterilization"
+                  />
+               </div>
+               <div className="flex flex-col gap-6 h-full">
+                  <div className="h-1/2">
+                    <TiltCard 
+                      // Image: Clean Room Corridor
+                      src="https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?q=80&w=800&auto=format&fit=crop"
+                      title="Clean Room"
+                      sub="ISO Class 8"
+                    />
+                  </div>
+                  <div className="h-1/2">
+                    <TiltCard 
+                      // Image: Digital Microscope / Lab
+                      src="https://images.unsplash.com/photo-1579165466741-7f35a4755657?q=80&w=800&auto=format&fit=crop"
+                      title="Inspection"
+                      sub="Digital Verification"
+                    />
+                  </div>
                </div>
             </div>
-            
-            {/* Image 2: Clean Room */}
-            <div className="bg-slate-100 rounded-2xl overflow-hidden relative group">
-               <img 
-                 src="https://images.unsplash.com/photo-1584036561566-b45274e3e5ee?q=80&w=600&auto=format" 
-                 alt="Clean Room" 
-                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-               />
-            </div>
-
-            {/* Image 3: Tech Detail */}
-            <div className="bg-slate-100 rounded-2xl overflow-hidden relative group">
-               <img 
-                 src="https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?q=80&w=600&auto=format" 
-                 alt="Inspection" 
-                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-               />
-            </div>
-          </div>
-        </div>
+         </div>
       </div>
 
-      {/* --- PART 2: THE PROCESS (Horizontal Scroll) --- */}
-      {/* Background is light grey (slate-50) to distinguish it from the white section above */}
-      <div ref={processRef} className="relative bg-slate-50 border-t border-slate-200">
-        
-        {/* Intro Text for Process */}
-        <div className="absolute top-12 left-6 lg:left-24 z-10 max-w-md pointer-events-none">
-          <h3 className="text-2xl font-bold text-slate-900 mb-2">The Vida Protocol</h3>
-          <p className="text-slate-500 text-sm font-medium uppercase tracking-widest">
-            Horizontal Scroll &rarr;
-          </p>
-        </div>
-
-        {/* The Track */}
-        <div ref={trackRef} className="h-screen flex items-center w-max pl-[10vw] pr-[10vw]">
-          
-          {steps.map((step, index) => (
-            <div 
-              key={index} 
-              className="w-[85vw] md:w-[50vw] lg:w-[35vw] flex-shrink-0 px-12 border-l border-slate-300 group"
-            >
-              {/* Step Number */}
-              <div className="text-8xl font-bold text-slate-200 mb-6 font-mono select-none group-hover:text-sky-100 transition-colors duration-500">
-                {step.id}
-              </div>
-              
-              {/* Animated Line */}
-              <div className="h-[3px] w-12 bg-sky-500 mb-8 origin-left group-hover:w-full transition-all duration-700 ease-out" />
-              
-              {/* Icon & Title */}
-              <div className="flex items-center gap-4 mb-4">
-                <div className="p-3 bg-white border border-slate-200 rounded-lg text-sky-600 shadow-sm">
-                  {step.icon}
-                </div>
-                <h3 className="text-2xl font-bold text-slate-900">{step.title}</h3>
-              </div>
-
-              {/* Description */}
-              <p className="text-lg text-slate-600 leading-relaxed">
-                {step.desc}
-              </p>
-            </div>
-          ))}
-
-          {/* End Card: The Result */}
-          <div className="w-[80vw] md:w-[40vw] flex-shrink-0 flex items-center justify-center pl-12">
-             <div className="text-center p-12 bg-white rounded-2xl shadow-xl border border-sky-100">
-               <div className="inline-block p-4 bg-green-50 rounded-full text-green-600 mb-6">
-                 <PackageCheck size={48} />
+      {/* --- PART 2: THE PROTOCOL (Auto-Play Carousel) --- */}
+      <div className="container mx-auto px-6 py-20 lg:py-24">
+         
+         {/* Carousel Header */}
+         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+            <div>
+               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-600 text-xs font-bold uppercase tracking-wider mb-4">
+                  The Protocol
                </div>
-               <h4 className="text-3xl font-bold text-slate-900 mb-2">100% Sterile</h4>
-               <p className="text-slate-500">Ready for Surgical Use</p>
-             </div>
-          </div>
+               <h3 className="text-3xl lg:text-4xl font-bold text-slate-900">
+                  5-Stage Safety Cycle
+               </h3>
+            </div>
 
-        </div>
+            {/* Controls */}
+            <div className="flex items-center gap-3">
+               <button onClick={handlePrev} className="p-3 rounded-full border border-slate-200 hover:border-sky-500 hover:text-sky-600 transition-all">
+                  <ChevronLeft size={20} />
+               </button>
+               <button onClick={() => setIsPaused(!isPaused)} className="p-3 rounded-full border border-slate-200 hover:bg-slate-50 text-slate-400 transition-all">
+                  {isPaused ? <Play size={18} /> : <Pause size={18} />}
+               </button>
+               <button onClick={handleNext} className="p-3 rounded-full bg-sky-600 text-white hover:bg-sky-700 transition-all shadow-lg shadow-sky-200">
+                  <ChevronRight size={20} />
+               </button>
+            </div>
+         </div>
+
+         {/* Carousel Body */}
+         <div className="relative w-full h-[550px] lg:h-[450px] bg-white rounded-3xl overflow-hidden shadow-2xl shadow-slate-200 border border-slate-100">
+            <AnimatePresence mode="wait">
+               <motion.div
+                 key={activeStep}
+                 initial={{ opacity: 0, x: 50 }}
+                 animate={{ opacity: 1, x: 0 }}
+                 exit={{ opacity: 0, x: -50 }}
+                 transition={{ duration: 0.5 }}
+                 className="absolute inset-0 flex flex-col lg:flex-row"
+               >
+                  {/* Image Side */}
+                  <div className="w-full lg:w-1/2 h-1/2 lg:h-full relative overflow-hidden">
+                     <motion.img 
+                       initial={{ scale: 1.1 }}
+                       animate={{ scale: 1 }}
+                       transition={{ duration: 5 }}
+                       src={steps[activeStep].img} 
+                       alt={steps[activeStep].title} 
+                       className="w-full h-full object-cover"
+                     />
+                     <div className="absolute inset-0 bg-gradient-to-r from-slate-900/20 to-transparent" />
+                  </div>
+
+                  {/* Content Side */}
+                  <div className="w-full lg:w-1/2 h-1/2 lg:h-full bg-white p-8 lg:p-16 flex flex-col justify-center relative">
+                     {/* Big Number Background */}
+                     <div className="absolute top-4 right-6 text-9xl font-bold text-slate-50 -z-0 select-none">
+                        {steps[activeStep].id}
+                     </div>
+
+                     <div className="relative z-10">
+                        <div className={`w-14 h-14 rounded-2xl ${steps[activeStep].bg} ${steps[activeStep].color} flex items-center justify-center mb-6 shadow-sm`}>
+                           {steps[activeStep].icon}
+                        </div>
+
+                        <h4 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-4">
+                           {steps[activeStep].title}
+                        </h4>
+                        
+                        <p className="text-lg text-slate-500 leading-relaxed mb-8">
+                           {steps[activeStep].desc}
+                        </p>
+
+                        {/* Progress Bar */}
+                        <div className="w-full h-1 bg-slate-100 rounded-full overflow-hidden">
+                           <motion.div 
+                             key={activeStep} // Restart animation on step change
+                             initial={{ width: "0%" }}
+                             animate={{ width: "100%" }}
+                             transition={{ duration: 5, ease: "linear" }}
+                             className="h-full bg-sky-600"
+                           />
+                        </div>
+                     </div>
+                  </div>
+               </motion.div>
+            </AnimatePresence>
+         </div>
+
+         {/* Dot Indicators */}
+         <div className="flex justify-center gap-2 mt-8">
+            {steps.map((_, idx) => (
+               <button 
+                 key={idx}
+                 onClick={() => { setActiveStep(idx); setIsPaused(true); setTimeout(() => setIsPaused(false), 8000); }}
+                 className={`h-2 rounded-full transition-all duration-300 ${activeStep === idx ? 'w-10 bg-sky-600' : 'w-2 bg-slate-200 hover:bg-sky-200'}`}
+               />
+            ))}
+         </div>
+
       </div>
 
     </section>
