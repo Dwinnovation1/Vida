@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { X, ZoomIn, Shield, Globe, Award } from 'lucide-react';
+import { X, ZoomIn, Shield, Globe, Award, CheckCircle } from 'lucide-react';
 
-// --- 3D TILT CERTIFICATE CARD (Card Component) ---
+// --- 3D TILT CERTIFICATE CARD (Unchanged) ---
 const CertificateCard = ({ src, title, issuer, onClick }) => {
   const ref = useRef(null);
 
@@ -38,7 +38,7 @@ const CertificateCard = ({ src, title, issuer, onClick }) => {
       style={{ perspective: 1000 }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative cursor-pointer group flex-shrink-0 w-[280px] md:w-[320px] mx-4" // Fixed Width for Marquee
+      className="relative cursor-pointer group flex-shrink-0 w-[280px] md:w-[320px] mx-4"
       onClick={onClick}
     >
       <motion.div
@@ -101,15 +101,11 @@ const Certificates = () => {
             "Compliance Authority"
   }));
 
-  // Split into 2 Rows for sliding effect
   const row1 = allCertificates.slice(0, 9);
   const row2 = allCertificates.slice(9, 17);
 
   return (
-    <div className="w-full bg-slate-50 min-h-screen pt-24 lg:pt-32 pb-32 relative overflow-hidden">
-      
-      {/* Background Decor */}
-      <div className="absolute top-0 left-0 w-full h-[500px] bg-gradient-to-b from-sky-50 to-transparent pointer-events-none" />
+    <div className="w-full bg-slate-50 min-h-screen pb-32 relative">
       
       {/* --- LIGHTBOX MODAL --- */}
       <AnimatePresence>
@@ -137,88 +133,82 @@ const Certificates = () => {
         )}
       </AnimatePresence>
 
+      {/* --- NEW: CINEMATIC HERO SECTION --- */}
+      <div className="relative h-[65vh] min-h-[500px] flex items-center justify-center overflow-hidden mb-20">
+         {/* Background Image with Parallax-like scale */}
+         <div className="absolute inset-0 z-0">
+            <img 
+               src="/images/certificatebgimg.avif" 
+               alt="Quality Assurance Lab" 
+               className="w-full h-full object-cover"
+            />
+            {/* Dark Cinematic Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-b from-slate-900/70 via-slate-900/60 "></div>
+         </div>
+
+         {/* Hero Content */}
+         <div className="relative z-10 text-center px-4 max-w-4xl mx-auto mt-12">
+            <motion.div 
+               initial={{ opacity: 0, y: 30 }}
+               animate={{ opacity: 1, y: 0 }}
+               transition={{ duration: 0.8, ease: "easeOut" }}
+            >
+               <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-sky-400 text-sm font-bold uppercase tracking-widest backdrop-blur-md mb-6">
+                  <Shield size={16} /> World-Class Compliance
+               </span>
+               <h1 className="text-5xl lg:text-7xl font-bold text-white mb-6 tracking-tight leading-tight">
+                  Certified for <br/>
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-blue-500">
+                     Global Excellence
+                  </span>
+               </h1>
+               <p className="text-lg lg:text-xl text-slate-300 leading-relaxed max-w-2xl mx-auto">
+                  Our manufacturing facilities adhere to the strictest international standards, holding valid certifications from global regulatory bodies.
+               </p>
+            </motion.div>
+         </div>
+      </div>
+
       <div className="container-fluid relative z-10">
         
-        {/* --- HEADER --- */}
-        <div className="text-center mb-16 max-w-3xl mx-auto px-6">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-slate-200 text-sky-600 text-xs font-bold uppercase tracking-wider mb-6 shadow-sm"
-          >
-            <Shield size={14} /> Official Documentation
-          </motion.div>
-          
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="text-4xl lg:text-6xl font-bold text-slate-900 mb-6"
-          >
-             Global Quality <br/>
-             <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-600 to-blue-600">
-               Standards & Licenses
-             </span>
-          </motion.h1>
-          
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="text-lg text-slate-500 leading-relaxed"
-          >
-             Our complete portfolio of regulatory approvals, manufacturing licenses, and international quality certifications.
-          </motion.p>
-        </div>
-
-        {/* --- SLIDING MARQUEE ROWS --- */}
-        
-        {/* ROW 1: Slides LEFT */}
+        {/* --- ROW 1: Slides LEFT --- */}
         <div className="w-full overflow-hidden mb-12 relative">
-           {/* Fade Edges for clean look */}
            <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-slate-50 to-transparent z-10 pointer-events-none" />
            <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-slate-50 to-transparent z-10 pointer-events-none" />
            
            <motion.div 
              className="flex w-max"
-             animate={{ x: [0, -2000] }} // Adjust -2000 based on width of items
-             transition={{ repeat: Infinity, ease: "linear", duration: 40 }} // Adjust Speed (40s)
-             whileHover={{ animationPlayState: "paused" }} // Note: Framer Motion hover pause needs CSS or state control, simpler to just keep running or use CSS animation for perfect pause.
-             style={{ x: 0 }} // Reset
+             animate={{ x: [0, -2000] }} 
+             transition={{ repeat: Infinity, ease: "linear", duration: 40 }} 
+             style={{ x: 0 }}
            >
-              {/* Duplicate items for seamless loop */}
-              {[...row1, ...row1, ...row1].map((cert, idx) => (
-                 <CertificateCard 
-                    key={`r1-${idx}`} 
-                    {...cert} 
-                    onClick={() => setSelectedImage(cert.src)} 
-                 />
-              ))}
+             {[...row1, ...row1, ...row1].map((cert, idx) => (
+                <CertificateCard 
+                   key={`r1-${idx}`} 
+                   {...cert} 
+                   onClick={() => setSelectedImage(cert.src)} 
+                />
+             ))}
            </motion.div>
         </div>
 
-        {/* ROW 2: Slides RIGHT (Reverse) */}
+        {/* --- ROW 2: Slides RIGHT --- */}
         <div className="w-full overflow-hidden relative">
-           {/* Fade Edges */}
            <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-slate-50 to-transparent z-10 pointer-events-none" />
            <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-slate-50 to-transparent z-10 pointer-events-none" />
 
            <motion.div 
              className="flex w-max"
-             animate={{ x: [-2000, 0] }} // Slides Opposite
-             transition={{ repeat: Infinity, ease: "linear", duration: 45 }} // Different speed for organic feel
+             animate={{ x: [-2000, 0] }} 
+             transition={{ repeat: Infinity, ease: "linear", duration: 45 }} 
            >
-              {/* Duplicate items */}
-              {[...row2, ...row2, ...row2].map((cert, idx) => (
-                 <CertificateCard 
-                    key={`r2-${idx}`} 
-                    {...cert} 
-                    onClick={() => setSelectedImage(cert.src)} 
-                 />
-              ))}
+             {[...row2, ...row2, ...row2].map((cert, idx) => (
+                <CertificateCard 
+                   key={`r2-${idx}`} 
+                   {...cert} 
+                   onClick={() => setSelectedImage(cert.src)} 
+                />
+             ))}
            </motion.div>
         </div>
 
@@ -230,6 +220,9 @@ const Certificates = () => {
                 </div>
                 <div className="flex items-center gap-2 font-bold text-slate-400 text-xl">
                     <Award size={24} /> GMP Compliant
+                </div>
+                <div className="flex items-center gap-2 font-bold text-slate-400 text-xl">
+                    <CheckCircle size={24} /> CE Marked
                 </div>
             </div>
         </div>

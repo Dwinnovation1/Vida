@@ -136,14 +136,14 @@ const Footer = () => {
               <li className="flex gap-4">
                 <MapPin className="text-sky-600 shrink-0" size={20} />
                 <span className="text-sm leading-relaxed">
-                  Vida Life Sciences Pvt. Ltd.<br/>
-                  Plot No. 45, MIDC Industrial Area,<br/>
-                  Jalgaon, Maharashtra - 425003
+                  
+                  
+                  Office Address - Bunglow No.4, 2nd Floor,<br/> 'Shriyash', Attrey Society, Gokhalenagar Road <br/>Opp. Hotel Sapna, Maharashtra 411016
                 </span>
               </li>
               <li className="flex gap-4 items-center">
                 <Phone className="text-sky-600 shrink-0" size={20} />
-                <span className="text-sm hover:text-white cursor-pointer transition-colors">+91 98765 43210</span>
+                <span className="text-sm hover:text-white cursor-pointer transition-colors">+91 9689491632</span>
               </li>
               <li className="flex gap-4 items-center">
                 <Mail className="text-sky-600 shrink-0" size={20} />
@@ -164,7 +164,7 @@ const Footer = () => {
             <span>&copy; {new Date().getFullYear()} Vida Life Sciences Pvt. Ltd. All rights reserved.</span>
             <span className="hidden md:block text-slate-800">|</span>
             <span className="flex items-center gap-1">
-               Designed by <span className="font-bold text-sky-600 cursor-pointer hover:text-white transition-colors">DW Innovation</span>
+               Designed by <span className="font-bold text-sky-600 cursor-pointer hover:text-white transition-colors">DW Innovation Pvt. Ltd</span>
             </span>
           </div>
           

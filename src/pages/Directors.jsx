@@ -1,13 +1,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom'; // Added for navigation
-import { ArrowRight, BookOpen } from 'lucide-react'; // Added icons
+import { Link } from 'react-router-dom';
+import { ArrowRight, BookOpen } from 'lucide-react';
 
 const Directors = () => {
 
   // --- ANIMATION VARIANTS ---
   const fadeIn = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 30 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
   };
 
@@ -22,36 +22,56 @@ const Directors = () => {
   };
 
   return (
-    <div className="w-full bg-white min-h-screen pt-24 pb-0 overflow-x-hidden font-sans">
+    <div className="w-full bg-white min-h-screen pt-0 pb-0 overflow-x-hidden font-sans">
       
       {/* =========================================================
-          1. PAGE HEADER
+          1. NEW CINEMATIC HERO SECTION
       ========================================================= */}
-      <section className="container mx-auto px-6 mb-16 lg:mb-24">
-        <motion.div 
-          initial="hidden"
-          animate="visible"
-          variants={fadeIn}
-          className="max-w-4xl mx-auto text-center border-b border-slate-100 pb-12"
-        >
-          <span className="inline-block py-1 px-3 mb-6 border border-sky-100 bg-sky-50 text-sky-800 text-xs font-bold tracking-[0.2em] uppercase rounded-sm">
-            Board of Directors
-          </span>
-          
-          <h1 className="text-4xl lg:text-5xl font-bold text-slate-900 leading-tight mb-8">
-            Leadership & Governance
-          </h1>
-          
-          <p className="text-lg text-slate-600 leading-relaxed max-w-3xl mx-auto">
-            At Vida Life Sciences, leadership is structured around clinical safety, operational precision, and manufacturing integrity. Our directors provide the governance required to maintain compliance with national and international medical standards.
-          </p>
-        </motion.div>
+      <section className="relative h-[75vh] min-h-[600px] flex items-center justify-center overflow-hidden mb-16">
+        
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0">
+           <img 
+             // Corporate / Boardroom Abstract Image
+             src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2069&auto=format&fit=crop" 
+             alt="Corporate Leadership" 
+             className="w-full h-full object-cover"
+           />
+           {/* Dark Cinematic Gradient Overlay (Fades to white at bottom) */}
+           <div className="absolute inset-0 bg-gradient-to-b from-slate-900/90 via-slate-900/70"></div>
+        </div>
+
+        {/* Hero Content */}
+        <div className="relative z-10 container mx-auto px-6 text-center mt-12">
+           <motion.div 
+             initial="hidden"
+             animate="visible"
+             variants={fadeIn}
+           >
+             {/* Glass Badge */}
+             <span className="inline-block py-2 px-5 mb-6 border border-white/20 bg-white/10 backdrop-blur-md text-sky-300 text-xs font-bold tracking-[0.2em] uppercase rounded-full shadow-lg">
+               Board of Directors
+             </span>
+             
+             {/* Main Title */}
+             <h1 className="text-5xl lg:text-7xl font-bold text-white leading-[1.1] mb-8 drop-shadow-2xl">
+               Visionary <br/>
+               <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-blue-600">
+                 Governance
+               </span>
+             </h1>
+             
+             {/* Subtitle */}
+             <p className="text-xl text-white leading-relaxed max-w-3xl mx-auto font-bold drop-shadow-md">
+               At Vida Life Sciences, leadership is structured around clinical safety, operational precision, and manufacturing integrity. Our directors provide the governance required to maintain compliance with global medical standards.
+             </p>
+           </motion.div>
+        </div>
       </section>
 
 
       {/* =========================================================
           2. DIRECTOR 1: DR. ONKAR A. YADAV
-          *** ADDED BUTTON HERE ***
       ========================================================= */}
       <section className="w-full py-16 lg:py-24 border-b border-slate-100">
         <div className="container mx-auto px-6">
@@ -65,13 +85,19 @@ const Directors = () => {
               viewport={{ once: true, margin: "-100px" }}
               variants={slideInLeft}
             >
-              <div className="relative w-full max-w-md aspect-[3/4] overflow-hidden rounded-lg shadow-xl border border-slate-200">
-                <div className="absolute inset-0 border-[6px] border-white/50 z-10 pointer-events-none"></div>
-                <img 
-                  src="/images/director_01.png" 
-                  alt="Dr. Onkar A. Yadav" 
-                  className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-[1.5s] ease-out"
-                />
+              {/* LIGHTNING BORDER WRAPPER */}
+              <div className="relative group p-1">
+                {/* The 'Lightning' Glow Layer */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-blue-800 via-sky-700 to-blue-800 rounded-lg blur opacity-90 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-pulse"></div>
+                
+                <div className="relative w-full max-w-md aspect-[3/4] overflow-hidden rounded-lg shadow-xl bg-white">
+                  <div className="absolute inset-0 border-[6px] border-white/50 z-10 pointer-events-none"></div>
+                  <img 
+                    src="/images/director_01.png" 
+                    alt="Dr. Onkar A. Yadav" 
+                    className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-[1.5s] ease-out"
+                  />
+                </div>
               </div>
             </motion.div>
 
@@ -172,13 +198,19 @@ const Directors = () => {
               viewport={{ once: true, margin: "-100px" }}
               variants={slideInRight}
             >
-              <div className="relative w-full max-w-md aspect-[3/4] overflow-hidden rounded-lg shadow-xl border border-slate-200 bg-white">
-                <div className="absolute inset-0 border-[6px] border-white/50 z-10 pointer-events-none"></div>
-                <img 
-                  src="/images/director_02.png" 
-                  alt="Mr. Dhananjay Sawant" 
-                  className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-[1.5s] ease-out"
-                />
+              {/* LIGHTNING BORDER WRAPPER */}
+              <div className="relative group p-1">
+                {/* The 'Lightning' Glow Layer */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-sky-300 via-blue-500 to-sky-300 rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-pulse"></div>
+
+                <div className="relative w-full max-w-md aspect-[3/4] overflow-hidden rounded-lg shadow-xl bg-white">
+                  <div className="absolute inset-0 border-[6px] border-white/50 z-10 pointer-events-none"></div>
+                  <img 
+                    src="/images/director_02.png" 
+                    alt="Mr. Dhananjay Sawant" 
+                    className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-[1.5s] ease-out"
+                  />
+                </div>
               </div>
             </motion.div>
 
@@ -202,14 +234,20 @@ const Directors = () => {
               viewport={{ once: true, margin: "-100px" }}
               variants={slideInLeft}
             >
-              <div className="relative w-full max-w-md aspect-[3/4] overflow-hidden rounded-lg shadow-xl border border-slate-200">
-                <div className="absolute inset-0 border-[6px] border-white/50 z-10 pointer-events-none"></div>
-                <img 
-                  src="/images/director 3rd.jpeg" 
-                  alt="Mr. Sanjay Khandagale" 
-                  className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-[1.5s] ease-out"
-                  onError={(e) => { e.target.src = "/images/director_02.png" }} 
-                />
+              {/* LIGHTNING BORDER WRAPPER */}
+              <div className="relative group p-1">
+                {/* The 'Lightning' Glow Layer */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-sky-300 via-blue-500 to-sky-300 rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-pulse"></div>
+
+                <div className="relative w-full max-w-md aspect-[3/4] overflow-hidden rounded-lg shadow-xl bg-white">
+                  <div className="absolute inset-0 border-[6px] border-white/50 z-10 pointer-events-none"></div>
+                  <img 
+                    src="/images/director 3rd.jpeg" 
+                    alt="Mr. Sanjay Khandagale" 
+                    className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-[1.5s] ease-out"
+                    onError={(e) => { e.target.src = "/images/director_02.png" }} 
+                  />
+                </div>
               </div>
             </motion.div>
 

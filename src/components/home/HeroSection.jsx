@@ -82,24 +82,7 @@ const HeroSection = () => {
               We don't just clean instruments; we manufacture safety standards for 300+ hospitals across India.
             </motion.p>
 
-            {/* 4. Action Buttons */}
-            <motion.div 
-              variants={itemVariants}
-              className="flex flex-col sm:flex-row gap-5"
-            >
-              {/* Primary Button */}
-              <button className="px-8 py-4 bg-sky-500 hover:bg-sky-400 text-white rounded-full font-bold transition-all duration-300 shadow-[0_0_20px_-5px_rgba(14,165,233,0.6)] hover:shadow-[0_0_30px_-5px_rgba(14,165,233,0.8)] flex items-center gap-2 group">
-                <ShieldCheck size={20} />
-                <span>Our Quality Policy</span>
-                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-              </button>
-              
-              {/* Secondary Button */}
-              <button className="px-8 py-4 bg-white/10 backdrop-blur-md border border-white/20 text-white rounded-full font-bold hover:bg-white/20 transition-all duration-300 flex items-center gap-2">
-                <PlayCircle size={20} />
-                <span>Watch Facility Tour</span>
-              </button>
-            </motion.div>
+            
 
         </motion.div>
 

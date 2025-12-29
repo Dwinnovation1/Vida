@@ -95,39 +95,39 @@ const ScaleSection = () => {
             </motion.div>
           ))}
         </div>
-
-        {/* --- PART 2: THE CTA (Brochure Button Removed) --- */}
+{/* --- PART 2: THE CTA (Brochure Button Removed) --- */}
         <motion.div 
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="relative w-full bg-slate-900 rounded-t-3xl overflow-hidden px-6 py-20 lg:py-24 text-center lg:text-left flex flex-col lg:flex-row items-center justify-between gap-12"
+          // CHANGED: Added 'mt-32 lg:mt-48' to create the gap above the block
+          className="relative w-full bg-slate-900 rounded-t-3xl overflow-hidden px-8 lg:px-16 py-24 flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-20 mt-32 lg:mt-48"
         >
           {/* Background Decoration */}
           <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-sky-600/20 rounded-full blur-[120px] pointer-events-none translate-x-1/2 -translate-y-1/2" />
           
-          <div className="relative z-10 max-w-2xl">
-            <h2 className="text-3xl lg:text-5xl font-bold text-white mb-6 leading-tight">
+          <div className="relative z-10 max-w-3xl text-center lg:text-left">
+            <h2 className="text-3xl lg:text-5xl font-bold text-white mb-8 leading-tight">
               Ready to upgrade your <br/>
               <span className="text-sky-500">Infection Control Standards?</span>
             </h2>
-            <p className="text-lg text-slate-400 leading-relaxed">
+            <p className="text-lg text-slate-400 leading-relaxed lg:pr-12">
               Consult with our biomedical engineers to audit your current CSSD setup. 
               We provide end-to-end support, from layout design to regulatory certification.
             </p>
           </div>
 
           <div className="relative z-10 flex flex-col sm:flex-row gap-4 shrink-0">
-              <a href="/contact" className="px-8 py-4 bg-sky-600 text-white font-bold rounded hover:bg-sky-500 transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-sky-900/50">
-                <Phone size={20} />
+              <a href="/contact" className="px-10 py-5 bg-sky-600 text-white font-bold rounded hover:bg-sky-500 transition-all duration-300 flex items-center justify-center gap-3 shadow-lg shadow-sky-900/50 text-lg">
+                <Phone size={22} />
                 Schedule an Audit
               </a>
           </div>
 
         </motion.div>
-
-      </div>
+</div>
+        
     </section>
   );
 };

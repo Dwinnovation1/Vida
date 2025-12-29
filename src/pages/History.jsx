@@ -1,8 +1,7 @@
-import React, { useLayoutEffect, useRef } from 'react'; // Changed to useLayoutEffect
+import React, { useLayoutEffect, useRef } from 'react'; 
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-// Register ScrollTrigger outside the component
 gsap.registerPlugin(ScrollTrigger);
 
 const History = () => {
@@ -15,7 +14,7 @@ const History = () => {
       title: "The Genesis",
       desc: "Founded by three directors with a singular vision. Vida Life Sciences began operations, establishing the groundwork for a healthcare-focused entity.",
       badge: "Inception",
-      img: "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?q=80&w=800&auto=format"
+      img: "/images/2011history.jpeg"
     },
     {
       year: "2014",
@@ -43,31 +42,30 @@ const History = () => {
       title: "Crisis Resilience",
       desc: "Demonstrated operational resilience during COVID-19. Completed critical installations in Imphal and gained government sector trust.",
       badge: "Resilience",
-      img: "https://images.unsplash.com/photo-1584036561566-b45274e3e5ee?q=80&w=800&auto=format"
+      img: "/images/Crisis Resilienceimg.avif"
     },
     {
       year: "2025",
       title: "Maturity Peak",
       desc: "First patent granted and Scopus-indexed research published. Vida stands as an innovator in sterilization technology.",
       badge: "Innovation",
-      img: "https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?q=80&w=800&auto=format"
+      img: "/images/Maturity Peakimg.avif"
     }
   ];
 
   // --- ANIMATION LOGIC ---
   useLayoutEffect(() => {
-    // 1. Safety Check: If container isn't ready, don't run GSAP
     if (!containerRef.current) return;
 
     const ctx = gsap.context(() => {
       
-      // HERO ANIMATIONS (Simple Fade Ups)
+      // HERO ANIMATIONS
       const tl = gsap.timeline();
       tl.from(".hero-badge", { y: 20, opacity: 0, duration: 0.8, ease: "power2.out" })
         .from(".main-title", { y: 30, opacity: 0, duration: 1, ease: "power2.out" }, "-=0.6")
         .from(".desc-text", { y: 20, opacity: 0, duration: 0.8, ease: "power2.out" }, "-=0.6");
 
-      // TIMELINE TRACK (Draws the line down as you scroll)
+      // TIMELINE TRACK
       gsap.to(".track-fill", {
         height: "100%",
         ease: "none",
@@ -79,7 +77,7 @@ const History = () => {
         },
       });
 
-      // HUGE YEAR (Parallax Effect - Moves slower than scroll)
+      // HUGE YEAR
       gsap.utils.toArray(".huge-year").forEach((year) => {
         gsap.to(year, {
           y: -100,
@@ -93,7 +91,7 @@ const History = () => {
         });
       });
 
-      // CONTENT CARDS (Fade In on Scroll)
+      // CONTENT CARDS
       gsap.utils.toArray(".js-reveal").forEach((card) => {
         gsap.fromTo(card, 
           { opacity: 0, y: 50 },
@@ -110,7 +108,7 @@ const History = () => {
         );
       });
 
-      // IMAGE REVEAL (Scale Effect)
+      // IMAGE REVEAL
       gsap.utils.toArray(".js-image-reveal img").forEach((img) => {
         gsap.fromTo(img,
           { scale: 1.2 },
@@ -128,24 +126,37 @@ const History = () => {
 
     }, containerRef);
 
-    return () => ctx.revert(); // Cleanup on unmount
+    return () => ctx.revert();
   }, []);
 
   return (
-    <div ref={containerRef} className="bg-slate-50 min-h-screen pt-24 pb-24 overflow-hidden">
+    <div ref={containerRef} className="bg-slate-50 min-h-screen pb-24 overflow-hidden">
       
-      {/* ================= HERO ================= */}
-      <header className="relative h-[60vh] flex flex-col items-center justify-center text-center px-6 mb-20">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,#f0f9ff_0%,#f8fafc_60%)] z-0" />
+      {/* ================= HERO (CINEMATIC UPDATE) ================= */}
+      <header className="relative h-[80vh] min-h-[600px] flex flex-col items-center justify-center text-center px-6 mb-20 overflow-hidden">
         
-        <div className="relative z-10 max-w-4xl mx-auto">
-          <div className="hero-badge inline-block px-6 py-2 border border-sky-600 rounded-full text-sky-700 font-bold text-sm tracking-[0.2em] uppercase mb-6 bg-white/50 backdrop-blur-sm">
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0">
+           <img 
+             src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop" 
+             alt="History Architecture" 
+             className="w-full h-full object-cover"
+           />
+           {/* Cinematic Dark Overlay */}
+           <div className="absolute inset-0 bg-gradient-to-b from-slate-900/80 via-slate-900/60"></div>
+        </div>
+        
+        <div className="relative z-10 max-w-4xl mx-auto mt-20">
+          <div className="hero-badge inline-block px-6 py-2 border border-white/20 rounded-full text-sky-300 font-bold text-sm tracking-[0.2em] uppercase mb-6 bg-white/5 backdrop-blur-md">
             Est. 2011
           </div>
-          <h1 className="main-title text-5xl lg:text-7xl font-bold text-slate-900 leading-[0.9] tracking-tighter mb-8">
-            EVOLUTION OF <br/> <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-600 to-blue-800">DISCIPLINE</span>
+          <h1 className="main-title text-5xl lg:text-8xl font-bold text-white leading-[0.9] tracking-tighter mb-8 drop-shadow-2xl">
+            EVOLUTION OF <br/> 
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-blue-500">
+              DISCIPLINE
+            </span>
           </h1>
-          <p className="desc-text text-xl text-slate-500 max-w-2xl mx-auto leading-relaxed">
+          <p className="desc-text text-xl text-white max-w-2xl mx-auto leading-relaxed font-bold">
             Vida did not appear overnight. We are the result of 14 years of phased capability building, field-tested research, and validated maturity.
           </p>
         </div>
@@ -154,7 +165,7 @@ const History = () => {
       {/* ================= JOURNEY ================= */}
       <section className="journey-section relative container mx-auto px-6">
         
-        {/* Timeline Track (Central Line) */}
+        {/* Timeline Track */}
         <div className="absolute top-0 bottom-0 left-[2rem] lg:left-1/2 lg:-translate-x-1/2 w-[2px] h-full z-0 hidden md:block">
           <div className="absolute inset-0 bg-slate-200"></div>
           <div className="track-fill absolute top-0 left-0 w-full h-0 bg-sky-600 shadow-[0_0_15px_rgba(14,165,233,0.6)]"></div>
@@ -171,14 +182,12 @@ const History = () => {
               
               {/* CONTENT SIDE */}
               <div className="w-full lg:w-[45%] relative">
-                {/* Huge Year (Parallax Background) */}
-                {/* Huge Year (Parallax Background) - UPDATED FOR VISIBILITY */}
-                    <div 
+                  <div 
                     className="huge-year absolute -top-32 left-1/2 -translate-x-1/2 text-[6rem] lg:text-[10rem] font-black text-slate-300 leading-none select-none z-[-1] opacity-60"
-                    style={{ WebkitTextStroke: '2px #cbd5e1' }} // Added a slight border to make it pop
-                    >
+                    style={{ WebkitTextStroke: '2px #cbd5e1' }}
+                  >
                     {item.year}
-                    </div>
+                  </div>
 
                 {/* Text Card */}
                 <div className="js-reveal bg-white/80 backdrop-blur-md p-8 lg:p-12 rounded-2xl border border-white shadow-xl shadow-slate-200/50">

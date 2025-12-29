@@ -3,8 +3,8 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { 
   ArrowLeft, GraduationCap, Microscope, Briefcase, 
-  Award, BookOpen, Users, Eye, Download, FileText 
-} from 'lucide-react';
+  Award, BookOpen, Users, Eye, Download, Quote 
+} from 'lucide-react'; // Added Quote icon
 
 const DirectorProfileDrYadav = () => {
 
@@ -48,16 +48,14 @@ const DirectorProfileDrYadav = () => {
         
         {/* =========================================================
             1. HERO SECTION: IDENTITY, OVERVIEW & RESOURCES
-            Update: Added Background Image + Action Buttons
         ========================================================= */}
         <motion.div 
-          className="relative bg-white rounded-2xl p-8 lg:p-12 shadow-sm border border-slate-100 mb-24 flex flex-col lg:flex-row gap-12 items-start overflow-hidden"
+          className="relative bg-white rounded-2xl p-8 lg:p-12 shadow-sm border border-slate-100 mb-16 flex flex-col lg:flex-row gap-12 items-start overflow-hidden"
           initial="hidden"
           animate="visible"
           variants={fadeInUp}
         >
           {/* --- A. BACKGROUND IMAGE OVERLAY (Subtle) --- */}
-          {/* Using a clean, abstract geometric pattern often used in medical brochures */}
           <div className="absolute inset-0 z-0 pointer-events-none">
              <img 
                src="https://images.unsplash.com/photo-1582719508461-905c673771fd?q=80&w=2525&auto=format&fit=crop" 
@@ -67,18 +65,24 @@ const DirectorProfileDrYadav = () => {
              <div className="absolute inset-0 bg-gradient-to-r from-white via-white/80 to-transparent"></div>
           </div>
 
-          {/* --- B. PORTRAIT --- */}
+          {/* --- B. PORTRAIT (WITH DARK LIGHTNING BORDER) --- */}
           <motion.div 
             className="w-full lg:w-1/3 flex-shrink-0 relative z-10"
             variants={portraitReveal}
           >
-            <div className="relative aspect-[3/4] rounded-xl overflow-hidden border border-slate-200 shadow-lg">
-               <img 
-                  src="/images/director_01.png" 
-                  alt="Dr. Onkar A. Yadav" 
-                  className="w-full h-full object-cover"
-                />
-            </div>
+             {/* LIGHTNING BORDER WRAPPER */}
+             <div className="relative group p-1">
+                {/* Darker Electric Blue Glow */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-blue-800 via-sky-700 to-blue-800 rounded-lg blur opacity-90 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-pulse"></div>
+                
+                <div className="relative aspect-[3/4] rounded-xl overflow-hidden border border-slate-200 shadow-lg bg-white">
+                  <img 
+                    src="/images/director_01.png" 
+                    alt="Dr. Onkar A. Yadav" 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+             </div>
           </motion.div>
 
           {/* --- C. HEADER CONTENT & BUTTONS --- */}
@@ -108,7 +112,7 @@ const DirectorProfileDrYadav = () => {
             {/* --- D. ACTION BUTTONS --- */}
             <div className="flex flex-col sm:flex-row gap-4">
               
-              {/* Button 1: View Bio (No Download, Open in New Tab) */}
+              {/* Button 1: View Bio */}
               <a 
                 href="/documents/dr-yadav-bio.pdf" 
                 target="_blank" 
@@ -119,7 +123,7 @@ const DirectorProfileDrYadav = () => {
                 <span>View Official Bio</span>
               </a>
 
-              {/* Button 2: Download Handbook (Forces Download) */}
+              {/* Button 2: Download Handbook */}
               <a 
                 href="/documents/sterilization-handbook.pdf" 
                 download="Sterilization_Handbook_Dr_Yadav.pdf"
@@ -131,13 +135,37 @@ const DirectorProfileDrYadav = () => {
               </a>
 
             </div>
-
           </div>
+        </motion.div>
+
+        {/* =========================================================
+            2. NEW: HIGHLIGHT QUOTE BLOCK (Moved from Bottom)
+        ========================================================= */}
+        <motion.div 
+          className="relative bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 rounded-2xl p-8 lg:p-14 mb-24 shadow-2xl overflow-hidden text-center lg:text-left border border-slate-800"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={fadeInUp}
+        >
+           {/* Decorative Big Quotes */}
+           <Quote className="absolute top-6 left-6 text-sky-500/10 w-24 h-24 -translate-x-2 -translate-y-2" />
+           <Quote className="absolute bottom-6 right-6 text-sky-500/10 w-24 h-24 translate-x-2 translate-y-2 rotate-180" />
+           
+           {/* Glow Effect */}
+           <div className="absolute top-0 right-0 w-64 h-64 bg-sky-500/10 rounded-full blur-[80px] pointer-events-none"></div>
+
+           <div className="relative z-10 max-w-5xl mx-auto flex flex-col items-center text-center">
+              <h3 className="text-xl lg:text-3xl font-light italic leading-relaxed text-slate-100 mb-6">
+                "Dr. Onkar A. Yadav’s leadership reflects a commitment to regulated healthcare excellence, combining academic insight, operational discipline, and governance integrity. His work continues to shape Vida Life Sciences as a responsible partner for hospitals, healthcare institutions, and regulatory stakeholders."
+              </h3>
+              <div className="w-16 h-1 bg-sky-500 rounded-full"></div>
+           </div>
         </motion.div>
 
 
         {/* =========================================================
-            2. ACADEMIC & RESEARCH GRID
+            3. ACADEMIC & RESEARCH GRID
         ========================================================= */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-24">
           
@@ -211,7 +239,7 @@ const DirectorProfileDrYadav = () => {
 
 
         {/* =========================================================
-            3. LEADERSHIP & EXPERTISE
+            4. LEADERSHIP & EXPERTISE
         ========================================================= */}
         <motion.section 
           className="bg-sky-50/40 rounded-2xl p-8 lg:p-16 shadow-sm border border-slate-100 mb-24"
@@ -281,8 +309,8 @@ const DirectorProfileDrYadav = () => {
                   "Educating healthcare professionals on best practices."
                 ].map((item, i) => (
                   <li key={i} className="p-4 bg-white rounded-lg text-slate-700 text-sm lg:text-base border border-slate-100 shadow-sm flex gap-3">
-                     <span className="text-sky-500 mt-1">›</span>
-                     {item}
+                      <span className="text-sky-500 mt-1">›</span>
+                      {item}
                   </li>
                 ))}
               </ul>
@@ -293,10 +321,10 @@ const DirectorProfileDrYadav = () => {
 
 
         {/* =========================================================
-            4. PHILOSOPHY & GOVERNANCE
+            5. PHILOSOPHY & GOVERNANCE
         ========================================================= */}
         <motion.div 
-          className="bg-slate-900/95 rounded-2xl p-8 lg:p-20 text-white text-center mb-24"
+          className="bg-slate-900/95 rounded-2xl p-8 lg:p-20 text-white text-center mb-0"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
@@ -321,21 +349,6 @@ const DirectorProfileDrYadav = () => {
              <span className="text-slate-600">•</span>
              <span>Long-term Value</span>
            </div>
-        </motion.div>
-
-
-        {/* =========================================================
-            5. CLOSING NOTE
-        ========================================================= */}
-        <motion.div 
-          className="text-center max-w-3xl mx-auto pt-8 border-t border-slate-200"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ delay: 0.2, duration: 1 }}
-        >
-          <p className="text-slate-500 italic leading-[1.85] text-lg">
-            "Dr. Onkar A. Yadav’s leadership reflects a commitment to regulated healthcare excellence, combining academic insight, operational discipline, and governance integrity. His work continues to shape Vida Life Sciences as a responsible partner for hospitals, healthcare institutions, and regulatory stakeholders."
-          </p>
         </motion.div>
 
       </div>

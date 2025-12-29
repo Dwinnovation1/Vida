@@ -6,6 +6,7 @@ import { AnimatePresence } from 'framer-motion';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import Preloader from './components/layout/Preloader';
+import ScrollToTop from './components/layout/ScrollToTop';
 
 // Pages
 import Home from './pages/Home';
@@ -48,6 +49,7 @@ function App() {
       {/* 2. Main Website (Visible after loading) */}
       {!isLoading && (
         <Router>
+          <ScrollToTop />
           <div className="App flex flex-col min-h-screen bg-slate-50">
             <Navbar />
             <WhatsAppBtn/>

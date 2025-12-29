@@ -21,6 +21,7 @@ const Home = () => {
       <NetworkMap/>
 {/* 4. Scale & CTA (New) */}
       <ScaleSection />
+      
     </main>
   );
 };
