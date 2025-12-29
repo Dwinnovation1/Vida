@@ -110,11 +110,11 @@ const Footer = () => {
             </h3>
             <ul className="space-y-4">
               {[
-                { name: "CSSD Equipment’s", path: "/products/cssd-equipment" },
-                { name: "CSSD SS Furniture", path: "/products/cssd-furniture" },
-                { name: "Automatic Bed Pan Washer", path: "/products/automatic-bedpan-washer" },
-                { name: "Manual Bed Pan Washer", path: "/products/manual-bedpan-washer" },
-                { name: "Hospital SS Furniture", path: "/products/hospital-furniture" }
+                { name: "CSSD Equipment’s", path: "/products/Cssdequipment" },
+                { name: "CSSD SS Furniture", path: "/products/CSSDFurniture" },
+                { name: "Automatic Bed Pan Washer", path: "/products/AutomatedBedPan" },
+                { name: "Manual Bed Pan Washer", path: "/products/ManualBedPan" },
+                { name: "Hospital SS Furniture", path: "/products/HospitalUtility" }
               ].map((prod, i) => (
                 <li key={i}>
                   <Link 

@@ -36,11 +36,11 @@ const Navbar = () => {
 
   // 2. Product Dropdown Data
   const productSublinks = [
-    { name: "CSSD Equipment’s", path: "/products/cssd-equipment" },
-    { name: "CSSD SS Furniture", path: "/products/cssd-furniture" },
-    { name: "Automatic Bed Pan Washer", path: "/products/automatic-bedpan-washer" },
-    { name: "Manual Bed Pan Washer", path: "/products/manual-bedpan-washer" },
-    { name: "Hospital SS Furniture", path: "/products/hospital-furniture" },
+    { name: "CSSD Equipment’s", path: "/products/Cssdequipment" },
+    { name: "CSSD SS Furniture", path: "/products/CSSDFurniture" },
+    { name: "Automatic Bed Pan Washer", path: "/products/AutomatedBedPan" },
+    { name: "Manual Bed Pan Washer", path: "/products/ManualBedPan" },
+    { name: "Hospital SS Furniture", path: "/products/HospitalUtility" },
   ];
 
   return (

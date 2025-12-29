@@ -1,219 +1,500 @@
-import React, { useLayoutEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowRight, CheckCircle2, Box, Stethoscope, Activity } from 'lucide-react';
+import React, { useState, useLayoutEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronDown, ArrowRight, ShieldCheck, Settings } from "lucide-react";
 
-gsap.registerPlugin(ScrollTrigger);
+/* ===========================
+   PRODUCT DATA - HOSPITAL SS FURNITURE (9 ITEMS)
+=========================== */
+const products = [
+  {
+    id: 1,
+    images: [
+      "/Screenshot 2025-12-29 233040.png",
+     
+    ],
+    name: "Endoscopy S.S. 304 Q Customized Endoscope Storage Cupboard",
+    subtitle: null,
+    desc: "Floor mounted customized endoscope storage cupboard designed for storing 6 endoscopes with UV sterilization and air circulation.",
+    specs: ["SS 304", "For 6 Endoscopes", "UV Sterilization", "0.3 Micron Filter"],
+    details: [
+      {
+        title: "Construction & Features",
+        points: [
+          "Floor mounted ; with inside Customized Hangers for hanging 6 Endoscopes, with Cushion at all sides",
+          "S.S. Hooks at sides for handing Accessories",
+          "3 sides Closed, Front with 2 transparent Doors with Handles",
+          "Perforation at Left and Right side and with nylon adjustable levelling bullets for legs",
+          "Air circulation will happen inside the cabinet. Air will get sterilize as it goes through 0.3 micron filter.",
+          "2 No of U.V. lights provides U.V. sterilization inside the cabinet"
+        ]
+      },
+      {
+        title: "Dimensions",
+        points: [
+          "Size:- 1200 x 400 x 2100 mm LxWxH"
+        ]
+      }
+    ]
+  },
+  {
+    id: 2,
+    images: [
+      "/Screenshot 2025-12-29 233215.png"
+    ],
+    name: "Vida Make S.S. 304 Instrument cupboard",
+    subtitle: null,
+    desc: "SS 304 Instrument cupboard with visible two shutter openable laminated glass door, lock, handle, and adjustable shelves.",
+    specs: ["SS 304 16g", "Laminated Glass Door", "5 Adjustable Shelves", "Jindal Make"],
+    details: [
+      {
+        title: "Dimensions",
+        points: [
+          "Size: 900 x 450 x 1800mm (H)"
+        ]
+      },
+      {
+        title: "Material Specification",
+        points: [
+          "1) S.S.304 Quality Jindal Company make 16g thick pre coated sheet",
+          "2) Plain 6mm visible laminated toughened glass",
+          "3) Manual operated locking system with heavy accessories."
+        ]
+      }
+    ]
+  },
+  {
+    id: 3,
+    images: [
+      "/Screenshot 2025-12-29 233332.png"
+    ],
+    name: "VIDA S.S. 304 Deluxe Floor Mounted Scrub Station Elbow & Foot Operated",
+    subtitle: null,
+    desc: "Deluxe floor mounted scrub station featuring elbow and foot operation with SS 304 construction.",
+    specs: ["SS 304 16g", "Elbow & Foot Operated", "Floor Mounted", "1 or 2 Port"],
+    details: [
+      {
+        title: "Specification",
+        points: [
+          "S.S. 304 quality Sheet inner body 16 g.",
+          "S.S. 304 quality Sheet outer body covering with three sides 16 g.",
+          "Adjustable nylon bush."
+        ]
+      },
+      {
+        title: "Available Sizes",
+        points: [
+          "1) 36” (L) X 24” (D) X 52” (H) – 1 port",
+          "2) 60” (L) x24” (W) x52” (H) – 2 port"
+        ]
+      }
+    ]
+  },
+  {
+    id: 4,
+    name: "VIDA S.S. 304 Deluxe Floor Mounted Scrub Station with Sensor & as well as Foot Operated Cock",
+    subtitle: null,
+    desc: "Advanced floor mounted scrub station with sensor and foot operated cock options.",
+    specs: ["SS 304 16g", "Sensor Operated", "Foot Operated", "Floor Mounted"],
+    details: [
+      {
+        title: "Specification",
+        points: [
+          "S.S. 304 quality Sheet inner body 16 g.",
+          "S.S. 304 quality Sheet outer body covering with three sides 16 g.",
+          "Adjustable nylon bush."
+        ]
+      },
+      {
+        title: "Available Sizes",
+        points: [
+          "1) 36” (L) X 24” (D) X 52” (H) – 1 port",
+          "2) 60” (L) x24” (W) x52” (H) – 2 port"
+        ]
+      }
+    ]
+  },
+  {
+    id: 5,
+    images: [
+      "/Screenshot 2025-12-29 233430.png"
+    ],
+    name: "VIDA S.S. 304 Wall mounted Scrub Station Elbow Operated",
+    subtitle: null,
+    desc: "Wall mounted scrub station with elbow operation and matt finishing.",
+    specs: ["SS 304 16G", "Wall Mounted", "Elbow Operated", "Matt Finish"],
+    details: [
+      {
+        title: "Material",
+        points: [
+          "Material: Inner S.S. 304, 16 G, Matt Finishing",
+          "S.S. 304 quality Sheet inner body"
+        ]
+      },
+      {
+        title: "Available Sizes",
+        points: [
+          "1) 36” (L) X 24” (D) X 36” (H) – 1 port",
+          "2) 60” (L) x24” (W) x36” (H)"
+        ]
+      }
+    ]
+  },
+  {
+    id: 6,
+    images: [
+      "/Screenshot 2025-12-29 233518.png"
+    ],
+    name: "Vida-SS 316 Anaesthesia Drug Trolley – Medicine Trolley",
+    subtitle: null,
+    desc: "Heavy gauge SS 316 medicine trolley with five drawers, partitions, and IV stand provision.",
+    specs: ["SS 316", "5 Drawers", "IV Stand Provision", "6 Inch Wheels"],
+    details: [
+      {
+        title: "Dimensions & Construction",
+        points: [
+          "Size: 1100mm(H) X 900mm(W) X 450mm(D)",
+          "And 600mm max height for IV stand",
+          "Made out of heavy gauge Stainless Steel sheet (316 grades) with five drawers.",
+          "Bottom shelf with doors.",
+          "Two shelves on top.",
+          "Provision for Injection fuse breaker supporting various sizes",
+          "Provision for catheter holder.",
+          "Mounted on 6 inches wheels.",
+          "Small racks on both side of trolley.",
+          "16 G Sheet.",
+          "20X20 sq. Pipe",
+          "4” Castor Wheels with break"
+        ]
+      },
+      {
+        title: "Drawer Configuration",
+        points: [
+          "First drawer contains 21 partitions(plastic box)",
+          "Second drawer contains 6 partitions",
+          "Third and fourth drawer contains 4 partitions each",
+          "1st drawer 100mm Height.",
+          "2nd drawer 150mm Height.",
+          "3rd drawer 200mm Height.",
+          "4th & 5th drawer 198mm."
+        ]
+      }
+    ]
+  },
+  {
+    id: 7,
+    images: [
+      "/Screenshot 2025-12-29 233840.png"
+    ],
+    name: "VIDA SS304 quality swab count holder",
+    subtitle: null,
+    desc: "SS 304 swab count holder with removable tray at bottom.",
+    specs: ["SS 304", "Removable Tray", "60” Height", "PVC Matt Sheet"],
+    details: [
+      {
+        title: "Dimensions",
+        points: [
+          "Size: 60” (H) x 30” (L) x 12” (W)"
+        ]
+      },
+      {
+        title: "Material specification",
+        points: [
+          "25 round pipe 18g.",
+          "SS Solid 8mm round bar",
+          "PVC Matt 0.8mm sheet"
+        ]
+      }
+    ]
+  },
+  {
+    id: 8,
+    images: [
+      "/Screenshot 2025-12-29 234000.png"
+    ],
+    name: "Vida-SS 304 Lead Apron Stand",
+    subtitle: null,
+    desc: "Heavy duty SS 304 lead apron stand suitable for hanging 10 aprons safely.",
+    specs: ["SS 304", "10 Aprons Capacity", "200-250 kg Load", "Heavy Duty"],
+    details: [
+      {
+        title: "Dimensions & Capacity",
+        points: [
+          "Size: 900mm x 600mm x 1500mm (H)",
+          "Heavy duty round and square pipe for bearing the weight of 200-250 kg.",
+          "It’s suitable for hanging 10 aprons safely."
+        ]
+      },
+      {
+        title: "Mobility",
+        points: [
+          "4 no’s nylon castor wheels out of 4 no’s, 2 are with brake for moving easily."
+        ]
+      }
+    ]
+  },
+  {
+    id: 9,
+    images: [
+      "/Screenshot 2025-12-29 234105.png"
+    ],
+    name: "Vida-Crash Cart fully SS 304",
+    subtitle: null,
+    desc: "Fully SS 304 crash cart with 6 modular drawers, medicine containers, and IV rod.",
+    specs: ["SS 304", "6 Modular Drawers", "IV Rod", "4'' PU Wheels"],
+    details: [
+      {
+        title: "Dimensions",
+        points: [
+          "Approx. Size: - 27’’x 24’’ x 58’’",
+          "Size of wheels : 4’’ Polyurethane wheels with break"
+        ]
+      },
+      {
+        title: "Features",
+        points: [
+          "six drawer modular system",
+          "upper two drawer with medicine containers",
+          "detachable SS 304 tray 3 nos (Size will be : 12’’x8’’x2.5’’(D))",
+          "Both side SS Cylindrical pipe catheter storage",
+          "SS I V rod behind the crash cart",
+          "System mounted on 100 mm DIA castors two with brake",
+          "2’’ collar on top and both side SS Hooks",
+          "SS 304L Frame 16G sheet for tray & Top"
+        ]
+      }
+    ]
+  }
+];
 
+/* ===========================
+   COMPONENT
+=========================== */
 const HospitalUtility = () => {
   const containerRef = useRef(null);
-  const productsRef = useRef([]);
+  const [activeId, setActiveId] = useState(null);
 
-  // --- PRODUCT DATA (Source: Section E, Items 01-09) ---
-  const products = [
-    {
-      id: 1,
-      name: "Endoscope Storage Cupboard",
-      subtitle: "Stores 6 Endoscopes / UV Sterilization / HEPA Filter",
-      desc: "Specialized floor-mounted storage with customized hangers for 6 endoscopes. Features active air circulation through 0.3-micron filters and 2 UV lights to maintain sterility during storage. Cushioning on all sides protects delicate equipment.", // [cite: 224-227]
-      specs: ["Capacity: 6 Scopes", "Filter: 0.3 Micron", "Safety: UV Sterilization"], // [cite: 224-227]
-      img: "/images/products/endoscope-cupboard.png"
-    },
-    {
-      id: 2,
-      name: "SS 304 Instrument Cupboard",
-      subtitle: "Toughened Laminated Glass / 5 Adjustable Shelves",
-      desc: "Robust storage for surgical instruments made from SS 304 (Jindal make) 16G sheet. Features visible 6mm laminated toughened glass doors with a heavy-duty manual locking system.", // [cite: 228]
-      specs: ["Size: 900x450x1800mm", "Glass: 6mm Toughened", "Shelves: 5 Adjustable"], // [cite: 228]
-      img: "/images/products/instrument-cupboard.png"
-    },
-    {
-      id: 3,
-      name: "Deluxe Scrub Station (Floor Mounted)",
-      subtitle: "Sensor & Foot Operated / SS 304 / 16 Gauge",
-      desc: "High-grade scrub station for OT complexes. Inner and outer body constructed from 16G SS 304. Available in single (36\") or double (60\") port configurations with nylon adjustable bushes.", // [cite: 228-231]
-      specs: ["Operation: Sensor + Foot", "Material: SS 304 16G", "Ports: 1 or 2"], // [cite: 228-231]
-      img: "/images/products/scrub-station-floor.png"
-    },
-    {
-      id: 4,
-      name: "Wall Mounted Scrub Station",
-      subtitle: "Elbow Operated / Space Saving / SS 304",
-      desc: "Compact wall-mounted design ideal for tighter spaces. Elbow-operated taps minimize hand contact. Built with a matte finish SS 304 inner body for durability and easy cleaning.", // [cite: 232]
-      specs: ["Type: Wall Mounted", "Operation: Elbow Cock", "Finish: Matt SS 304"], // [cite: 232]
-      img: "/images/products/scrub-station-wall.png"
-    },
-    {
-      id: 5,
-      name: "Anaesthesia Drug Trolley",
-      subtitle: "SS 316 Grade / 5 Drawers / Partitioned Storage",
-      desc: "Premium trolley made from heavy gauge SS 316 (superior corrosion resistance). Features 5 drawers with organized partitions for medicines, injection fuse breakers, and catheter holders.", // [cite: 233-236]
-      specs: ["Material: SS 316", "Drawers: 5 (Partitioned)", "Wheels: 4 Castor w/ Brake"], // [cite: 233-237]
-      img: "/images/products/anaesthesia-trolley.png"
-    },
-    {
-      id: 6,
-      name: "Emergency Crash Cart",
-      subtitle: "6 Drawer Modular System / Cardiac Board / IV Rod",
-      desc: "Fully equipped SS 304 crash cart for emergency response. Includes 6 modular drawers, detachable trays, medicine containers, and a rear-mounted oxygen cylinder holder.", // [cite: 241]
-      specs: ["Drawers: 6 Modular", "Accessory: O2 Holder", "Mobility: 100mm Castors"], // [cite: 241]
-      img: "/images/products/crash-cart.png"
-    },
-    {
-      id: 7,
-      name: "Lead Apron Stand",
-      subtitle: "Hangs 10 Aprons / 200kg Capacity / Mobile",
-      desc: "Heavy-duty stand designed to bear the weight of radiology protection gear (up to 250kg). Constructed from round and square pipes with nylon castor wheels for mobility.", // [cite: 239-240]
-      specs: ["Capacity: 10 Aprons", "Load: 200-250kg", "Wheels: Nylon w/ Brake"], // [cite: 239-240]
-      img: "/images/products/apron-stand.png"
-    },
-    {
-      id: 8,
-      name: "Swab Count Holder",
-      subtitle: "SS 304 / Removable Tray / OT Essential",
-      desc: "Designed for counting sponges and swabs during surgery. Features a removable tray below for disposal. Built from 25mm round pipe and solid 8mm round bars.", // [cite: 238]
-      specs: ["Material: SS 304", "Tray: Removable", "Frame: 18G Pipe"], // [cite: 238]
-      img: "/images/products/swab-holder.png"
-    }
-  ];
-
-  // --- ANIMATION SETUP ---
+  // GSAP – PAGE ENTRANCE
   useLayoutEffect(() => {
-    let ctx = gsap.context(() => {
-      productsRef.current.forEach((el, index) => {
-        const isEven = index % 2 === 0;
-        
-        gsap.fromTo(el, 
-          { 
-            opacity: 0, 
-            x: isEven ? -100 : 100 
-          },
-          {
-            opacity: 1, 
-            x: 0,
-            duration: 1.2,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: el,
-              start: "top 80%",
-              end: "bottom 20%",
-              toggleActions: "play none none reverse"
-            }
-          }
-        );
+    const ctx = gsap.context(() => {
+      gsap.from(".product-row", {
+        opacity: 0,
+        y: 24,
+        duration: 0.8,
+        ease: "power2.out",
+        stagger: 0.06,
       });
     }, containerRef);
 
     return () => ctx.revert();
   }, []);
 
+  const toggleItem = (id) => {
+    setActiveId((prev) => (prev === id ? null : id));
+  };
+
   return (
-    <div ref={containerRef} className="w-full bg-white min-h-screen pt-24 font-sans">
+    <div ref={containerRef} className="relative bg-slate-50 pt-24 pb-32 overflow-hidden min-h-screen">
       
-      {/* --- SECTION 1: CATEGORY HEADER --- */}
-      <section className="container mx-auto px-6 mb-24 text-center max-w-4xl">
-        <span className="inline-block py-1 px-3 mb-6 bg-blue-50 text-blue-800 text-xs font-bold tracking-widest uppercase rounded">
-          Product Category
-        </span>
-        <h1 className="text-4xl lg:text-6xl font-bold text-slate-900 mb-8">
-          Hospital Utility <span className="text-sky-600">Furniture</span>
-        </h1>
-        <p className="text-lg text-slate-600 leading-relaxed">
-          Infrastructure that supports clinical precision. Our range of OT and Ward furniture 
-          is engineered from <strong>High-Grade SS 304 & 316</strong> to withstand rigorous 
-          cleaning protocols while ensuring ergonomic workflow for medical staff.
-        </p>
-      </section>
+      {/* --- BACKGROUND IMAGE WITH ANIMATION --- */}
+      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+         <motion.div
+           initial={{ scale: 1 }}
+           animate={{ scale: 1.08, x: ["0%", "2%", "0%"] }} // Smooth zoom & pan loop
+           transition={{
+             duration: 25,
+             repeat: Infinity,
+             repeatType: "reverse",
+             ease: "easeInOut",
+           }}
+           className="absolute inset-0 w-full h-full bg-cover bg-center"
+           style={{
+               // UPDATED IMAGE PATH
+               backgroundImage: "url('/Hospital SS Furniture.png')", 
+               opacity: 0.2, // Corrected opacity to 0.2
+           }}
+         />
+         {/* OVERLAY GRADIENT */}
+         <div className="absolute inset-0 bg-gradient-to-b from-slate-50/90 via-slate-50/80 to-slate-50/95"></div>
+      </div>
 
-      {/* --- SECTION 2: ANIMATED PRODUCT SHOWCASE --- */}
-      <section className="container mx-auto px-6 mb-32 overflow-hidden">
-        <div className="flex flex-col gap-24 lg:gap-32">
-          {products.map((product, index) => (
-            <div 
-              key={product.id}
-              ref={el => productsRef.current[index] = el}
-              className={`flex flex-col lg:flex-row items-center gap-12 lg:gap-20 ${
-                index % 2 !== 0 ? 'lg:flex-row-reverse' : '' 
-              }`}
-            >
-              {/* Image Block */}
-              <div className="w-full lg:w-1/2">
-                <div className="relative aspect-[4/3] bg-slate-50 rounded-2xl overflow-hidden border border-slate-100 shadow-sm group">
-                  <div className="absolute inset-0 flex items-center justify-center bg-slate-100 text-slate-400">
-                    <span>[Image: {product.name}]</span>
-                  </div>
-                  <div className="absolute inset-0 bg-blue-900/0 group-hover:bg-blue-900/5 transition-colors duration-500"></div>
-                </div>
-              </div>
-
-              {/* Text Block */}
-              <div className="w-full lg:w-1/2">
-                <h3 className="text-sky-600 font-bold text-sm tracking-wider uppercase mb-2">
-                  {product.subtitle}
-                </h3>
-                <h2 className="text-3xl font-bold text-slate-900 mb-6">
-                  {product.name}
-                </h2>
-                <p className="text-slate-600 text-lg leading-relaxed mb-8">
-                  {product.desc}
-                </p>
-                
-                {/* Specs Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-                  {product.specs.map((spec, i) => (
-                    <div key={i} className="flex items-center gap-2 text-slate-700 font-medium text-sm">
-                      <Box size={16} className="text-sky-500" />
-                      {spec}
-                    </div>
-                  ))}
-                </div>
-
-                <div className="flex items-center gap-2 text-slate-400 text-sm italic">
-                  <Stethoscope size={16} />
-                  <span>Standardized dimensions for OT integration</span>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* --- SECTION 3: CLINICAL VALUE SUMMARY --- */}
-      <section className="bg-slate-50 py-24 border-y border-slate-200">
-        <div className="container mx-auto px-6 text-center max-w-4xl">
-          <h2 className="text-3xl font-bold text-slate-900 mb-12">Quality That Lasts</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="p-6 bg-white rounded-xl shadow-sm">
-              <h3 className="font-bold text-slate-900 mb-2">SS 316 Upgrades</h3>
-              <p className="text-sm text-slate-600">Premium material options available for drug trolleys and critical OT furniture.</p>
-            </div>
-            <div className="p-6 bg-white rounded-xl shadow-sm">
-              <h3 className="font-bold text-slate-900 mb-2">Ergonomic Fit</h3>
-              <p className="text-sm text-slate-600">Scrub stations and trolleys designed to reduce strain during long shifts.</p>
-            </div>
-            <div className="p-6 bg-white rounded-xl shadow-sm">
-              <h3 className="font-bold text-slate-900 mb-2">Infection Safe</h3>
-              <p className="text-sm text-slate-600">Seamless welding and matt finishes prevent bacterial traps and glare.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* --- SECTION 4: PROFESSIONAL CTA --- */}
-      <section className="py-24 bg-white text-center">
-        <div className="container mx-auto px-6">
-          <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-6">
-            Complete Your OT Setup
-          </h2>
-          <p className="text-lg text-slate-600 mb-10 max-w-2xl mx-auto">
-            From crash carts to scrub sinks, we supply the essential infrastructure for modern hospitals.
+      <div className="relative z-10">
+        {/* INTRO */}
+        <section className="container mx-auto px-6 max-w-4xl text-center mb-16">
+          <span className="inline-block mb-6 px-3 py-1 text-xs font-bold uppercase tracking-widest bg-blue-100 text-blue-800 rounded">
+            Infrastructure
+          </span>
+          <h1 className="text-4xl font-bold text-slate-900 mb-6">
+            Hospital <span className="text-sky-600">SS Furniture</span>
+          </h1>
+          <p className="text-lg text-slate-600 leading-relaxed">
+            High-quality, durable, and ergonomic stainless steel furniture solutions tailored for modern healthcare environments.
           </p>
-          <a href="/contact" className="inline-flex items-center gap-2 px-8 py-4 bg-blue-900 text-white font-bold rounded hover:bg-blue-800 transition-all">
-            Request Furniture Catalog <ArrowRight size={20} />
-          </a>
-        </div>
-      </section>
+        </section>
 
+        {/* ACCORDION */}
+        <section className="container mx-auto px-6 max-w-5xl">
+          <div className="flex flex-col gap-4">
+            {products.map((product) => {
+              const isOpen = activeId === product.id;
+
+              // === SMART IMAGE LOGIC ===
+              // Detects if 'img' or 'images' is used, and handles arrays or strings
+              let productImages = [];
+              if (product.images && product.images.length > 0) {
+                productImages = product.images;
+              } else if (Array.isArray(product.img)) {
+                productImages = product.img;
+              } else if (typeof product.img === "string") {
+                productImages = [product.img];
+              }
+
+              return (
+                <motion.div
+                  key={product.id}
+                  layout
+                  className={`product-row bg-white rounded-2xl border ${
+                    isOpen ? "border-sky-500 shadow-lg shadow-sky-100" : "border-slate-200"
+                  }`}
+                >
+                  <button
+                    onClick={() => toggleItem(product.id)}
+                    className="w-full flex justify-between items-center p-6 lg:p-8 text-left"
+                  >
+                    <div>
+                      {/* CONDITIONAL SUBTITLE - Renders only if subtitle exists */}
+                      {product.subtitle && (
+                        <span className="text-xs uppercase tracking-widest text-slate-400 block mb-1">
+                            {product.subtitle}
+                        </span>
+                      )}
+                      <h3 className="text-xl font-bold text-slate-900">
+                        {product.name}
+                      </h3>
+                    </div>
+
+                    <motion.div
+                      animate={{ rotate: isOpen ? 180 : 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="p-3 rounded-full bg-slate-50 text-slate-500 flex-shrink-0 ml-4"
+                    >
+                      <ChevronDown size={22} />
+                    </motion.div>
+                  </button>
+
+                  <AnimatePresence initial={false}>
+                    {isOpen && (
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.25 }}
+                        className="px-6 lg:px-10 pb-10 border-t"
+                      >
+                        {/* FOR PRODUCTS (DETAILED VIEW) */}
+                        {product.details ? (
+                          <div className="mt-8">
+                             <div className="grid lg:grid-cols-3 gap-10">
+                                {/* Left Column: Image & Highlights */}
+                                <div className="lg:col-span-1">
+                                    <div className="bg-slate-100 rounded-xl aspect-[4/3] flex items-center justify-center sticky top-6 overflow-hidden relative group">
+                                        
+                                        {/* === IMAGE RENDERING START === */}
+                                        {productImages.length > 0 ? (
+                                           <div className="w-full h-full flex overflow-x-auto snap-x snap-mandatory scrollbar-hide">
+                                               {productImages.map((src, idx) => (
+                                                   <img 
+                                                     key={idx}
+                                                     src={src} 
+                                                     alt={`${product.name} ${idx + 1}`} 
+                                                     className="w-full h-full object-contain flex-shrink-0 snap-center p-4"
+                                                   />
+                                               ))}
+                                               {productImages.length > 1 && (
+                                                 <div className="absolute bottom-2 right-2 bg-black/60 text-white text-[10px] px-2 py-1 rounded-full opacity-70 pointer-events-none">
+                                                     Swipe ↔
+                                                 </div>
+                                               )}
+                                           </div>
+                                        ) : (
+                                           <div className="flex flex-col items-center justify-center text-slate-400">
+                                               <span className="text-4xl mb-2">📷</span>
+                                               <span className="text-sm">No Image</span>
+                                           </div>
+                                        )}
+                                        {/* === IMAGE RENDERING END === */}
+
+                                    </div>
+                                    
+                                    <div className="mt-6">
+                                        <h4 className="flex items-center gap-2 font-bold mb-3 text-sm uppercase tracking-wide text-sky-700">
+                                            <ShieldCheck size={16} /> Highlights
+                                        </h4>
+                                        <div className="flex flex-wrap gap-2">
+                                            {product.specs.map((spec, i) => (
+                                                <span key={i} className="bg-sky-50 text-sky-800 text-xs font-semibold px-2.5 py-1 rounded border border-sky-100">
+                                                    {spec}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Right Column: Detailed Text */}
+                                <div className="lg:col-span-2 space-y-8">
+                                    
+                                    {product.details.map((section, idx) => (
+                                        <div key={idx} className="bg-slate-50 p-6 rounded-xl border border-slate-100">
+                                            <h4 className="flex items-center gap-2 font-bold mb-4 text-slate-900 border-b pb-2 border-slate-200">
+                                                <Settings size={18} className="text-sky-500" />
+                                                {section.title}
+                                            </h4>
+                                            <ul className="space-y-2">
+                                                {section.points.map((point, pIdx) => (
+                                                    <li key={pIdx} className="text-sm text-slate-600 flex items-start gap-2">
+                                                        <span className="text-sky-400 mt-1.5 font-bold">•</span>
+                                                        <span>{point}</span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    ))}
+                                </div>
+                             </div>
+                          </div>
+                        ) : (
+                          /* FALLBACK */
+                          <div className="grid lg:grid-cols-3 gap-10 mt-8">
+                            <div className="bg-slate-100 rounded-xl aspect-[4/3] flex items-center justify-center">
+                              <span className="text-slate-400 text-sm">Image Placeholder</span>
+                            </div>
+                            <div className="lg:col-span-2">
+                              <p className="text-slate-600 mb-6">{product.desc}</p>
+                            </div>
+                          </div>
+                        )}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* CTA */}
+        <section className="text-center py-24">
+          <h2 className="text-2xl font-bold mb-6">
+            Equip Your Facility with the Best
+          </h2>
+          <a
+            href="/contact"
+            className="inline-flex items-center gap-3 px-8 py-4 bg-sky-700 text-white rounded-full font-bold hover:bg-sky-800 transition-colors"
+          >
+            Get a Quote <ArrowRight size={18} />
+          </a>
+        </section>
+      </div>
     </div>
   );
 };

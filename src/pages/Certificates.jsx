@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { X, ZoomIn, Shield, Globe, Award, CheckCircle } from 'lucide-react';
+import { X, ZoomIn, Shield, Globe, Award } from 'lucide-react';
 
-// --- 3D TILT CERTIFICATE CARD (Unchanged) ---
+// --- 3D TILT CERTIFICATE CARD (Updated Width for 3 items) ---
 const CertificateCard = ({ src, title, issuer, onClick }) => {
   const ref = useRef(null);
 
@@ -38,12 +38,13 @@ const CertificateCard = ({ src, title, issuer, onClick }) => {
       style={{ perspective: 1000 }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative cursor-pointer group flex-shrink-0 w-[280px] md:w-[320px] mx-4"
+      // UPDATE: Width set to 32vw on desktop (approx 3 items per line) and 85vw on mobile
+      className="relative cursor-pointer group flex-shrink-0 w-[85vw] md:w-[32vw] mx-4" 
       onClick={onClick}
     >
       <motion.div
         style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-        className="relative aspect-[3/4] w-full bg-white rounded-xl shadow-lg overflow-hidden border border-slate-200"
+        className="relative aspect-[4/3] w-full bg-white rounded-xl shadow-lg overflow-hidden border border-slate-200"
       >
         {/* Shutter Reveal Effect */}
         <motion.div
@@ -59,7 +60,7 @@ const CertificateCard = ({ src, title, issuer, onClick }) => {
           <motion.img
             src={src}
             alt={title}
-            className="h-full w-full object-cover"
+            className="h-full w-full object-contain rounded-xl pointer-events-none relative z-5"
             whileHover={{ scale: 1.1 }}
             transition={{ duration: 0.5 }}
             onError={(e) => { e.target.src = "https://via.placeholder.com/600x800?text=Certificate"; }}
@@ -101,11 +102,14 @@ const Certificates = () => {
             "Compliance Authority"
   }));
 
-  const row1 = allCertificates.slice(0, 9);
-  const row2 = allCertificates.slice(9, 17);
+  // Duplicate list once to create a seamless loop
+  const marqueeList = [...allCertificates, ...allCertificates];
 
   return (
-    <div className="w-full bg-slate-50 min-h-screen pb-32 relative">
+    <div className="w-full bg-slate-50 min-h-screen pt-24 lg:pt-32 pb-32 relative overflow-hidden">
+      
+      {/* Background Decor */}
+      <div className="absolute top-0 left-0 w-full h-[500px] bg-gradient-to-b from-sky-50 to-transparent pointer-events-none" />
       
       {/* --- LIGHTBOX MODAL --- */}
       <AnimatePresence>
@@ -133,8 +137,9 @@ const Certificates = () => {
         )}
       </AnimatePresence>
 
-      {/* --- NEW: CINEMATIC HERO SECTION --- */}
-      <div className="relative h-[65vh] min-h-[500px] flex items-center justify-center overflow-hidden mb-20">
+      <div className="container-fluid relative z-10">
+        
+        <div className="relative h-[65vh] min-h-[500px] flex items-center justify-center overflow-hidden mb-20">
          {/* Background Image with Parallax-like scale */}
          <div className="absolute inset-0 z-0">
             <img 
@@ -169,42 +174,22 @@ const Certificates = () => {
          </div>
       </div>
 
-      <div className="container-fluid relative z-10">
-        
-        {/* --- ROW 1: Slides LEFT --- */}
-        <div className="w-full overflow-hidden mb-12 relative">
+        {/* --- SINGLE SLIDING MARQUEE ROW --- */}
+        <div className="w-full overflow-hidden relative py-10">
+           {/* Fade Edges for clean look */}
            <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-slate-50 to-transparent z-10 pointer-events-none" />
            <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-slate-50 to-transparent z-10 pointer-events-none" />
            
            <motion.div 
              className="flex w-max"
-             animate={{ x: [0, -2000] }} 
-             transition={{ repeat: Infinity, ease: "linear", duration: 40 }} 
-             style={{ x: 0 }}
+             // Animate x from 0% to -50% (half the total width, which equals one full set of certificates)
+             animate={{ x: ["0%", "-50%"] }} 
+             transition={{ repeat: Infinity, ease: "linear", duration: 60 }} // Slower duration for readability
+             style={{ width: "max-content" }}
            >
-             {[...row1, ...row1, ...row1].map((cert, idx) => (
+             {marqueeList.map((cert, idx) => (
                 <CertificateCard 
-                   key={`r1-${idx}`} 
-                   {...cert} 
-                   onClick={() => setSelectedImage(cert.src)} 
-                />
-             ))}
-           </motion.div>
-        </div>
-
-        {/* --- ROW 2: Slides RIGHT --- */}
-        <div className="w-full overflow-hidden relative">
-           <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-slate-50 to-transparent z-10 pointer-events-none" />
-           <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-slate-50 to-transparent z-10 pointer-events-none" />
-
-           <motion.div 
-             className="flex w-max"
-             animate={{ x: [-2000, 0] }} 
-             transition={{ repeat: Infinity, ease: "linear", duration: 45 }} 
-           >
-             {[...row2, ...row2, ...row2].map((cert, idx) => (
-                <CertificateCard 
-                   key={`r2-${idx}`} 
+                   key={`${cert.id}-${idx}`} 
                    {...cert} 
                    onClick={() => setSelectedImage(cert.src)} 
                 />
@@ -213,16 +198,13 @@ const Certificates = () => {
         </div>
 
         {/* --- BOTTOM TRUST STRIP --- */}
-        <div className="container mx-auto px-6 mt-20 border-t border-slate-200 pt-10">
+        <div className="container mx-auto px-6 mt-10 border-t border-slate-200 pt-10">
             <div className="flex flex-wrap justify-center gap-8 lg:gap-16 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
                 <div className="flex items-center gap-2 font-bold text-slate-400 text-xl">
                     <Globe size={24} /> ISO Certified
                 </div>
                 <div className="flex items-center gap-2 font-bold text-slate-400 text-xl">
                     <Award size={24} /> GMP Compliant
-                </div>
-                <div className="flex items-center gap-2 font-bold text-slate-400 text-xl">
-                    <CheckCircle size={24} /> CE Marked
                 </div>
             </div>
         </div>

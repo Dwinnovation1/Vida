@@ -20,12 +20,13 @@ import Contact from './pages/Contact';
 import DirectorProfileDrYadav from './pages/DirectorProfileDrYadav';
 
 // Product Categories
-import SterilizationSystems from './pages/products/cssd-equipment';
+
+import WhatsAppBtn from './components/common/WhatsAppBtn';
 import CSSDFurniture from './pages/products/CSSDFurniture';
 import AutomatedBedPan from './pages/products/AutomatedBedPan';
 import ManualBedPan from './pages/products/ManualBedPan';
 import HospitalUtility from './pages/products/HospitalUtility';
-import WhatsAppBtn from './components/common/WhatsAppBtn';
+import Cssdequipment from './pages/products/Cssdequipment';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -67,11 +68,11 @@ function App() {
                 <Route path="/directors/dr-onkar-yadav" element={<DirectorProfileDrYadav />} />
                 
                 {/* Product Routes */}
-                <Route path="/products/cssd-equipment" element={<SterilizationSystems />} />
-                <Route path="/products/cssd-furniture" element={<CSSDFurniture />} />
-                <Route path="/products/automated-bed-pan" element={<AutomatedBedPan />} />
-                <Route path="/products/manual-bed-pan" element={<ManualBedPan />} />
-                <Route path="/products/hospital-utility" element={<HospitalUtility />} />
+                <Route path="/products/Cssdequipment" element={<Cssdequipment/>} />
+                <Route path="/products/CSSDFurniture" element={< CSSDFurniture/>} />
+                <Route path="/products/AutomatedBedPan" element={<AutomatedBedPan />} />
+                <Route path="/products/ManualBedPan" element={<ManualBedPan />} />
+                <Route path="/products/HospitalUtility" element={<HospitalUtility />} />
               </Routes>
             </div>
 
