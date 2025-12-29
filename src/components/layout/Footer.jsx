@@ -138,7 +138,7 @@ const Footer = () => {
                 <span className="text-sm leading-relaxed">
                   
                   
-                  Office Address - Bunglow No.4, 2nd Floor,<br/> 'Shriyash', Attrey Society, Gokhalenagar Road <br/>Opp. Hotel Sapna, Maharashtra 411016
+                  Office Address - Bunglow No.4, 2nd Floor, 'Shriyash', Attrey Society, Gokhalenagar Road Opp. Hotel Sapna, Maharashtra 411016
                 </span>
               </li>
               <li className="flex gap-4 items-center">

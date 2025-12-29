@@ -2,16 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+/* --- GLOBAL STYLES --- */
+@layer base {
+  html {
+    font-family: "Mulish", sans-serif;
+  }
+  
+  body {
+    /* Updated color to match your new screenshot (#18274A) */
+    @apply text-[#18274A] bg-slate-50 antialiased;
+  }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  /* Automatically make all headings bold and slightly darker */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold text-[#18274A];
+  }
 }

@@ -12,44 +12,107 @@ const History = () => {
     {
       year: "2011",
       title: "The Genesis",
-      desc: "Founded by three directors with a singular vision. Vida Life Sciences began operations, establishing the groundwork for a healthcare-focused entity.",
+      desc: "Vida Life Sciences Pvt Ltd. was launched by Dr. Onkar Yadav, Mr. Dhananjay Sawant & Mr Sanjay Khandagale.",
       badge: "Inception",
-      img: "/images/2011history.jpeg"
+      img: "/images/2011.jpeg"
+    },
+    {
+      year: "2012",
+      title: "Supply Operations",
+      desc: "Started hospital equipment & furniture supply.",
+      badge: "Operations",
+      img: "/images/2012.jpeg"
+    },
+    {
+      year: "2013",
+      title: "Market Establishment",
+      desc: "Started hospital equipment & furniture supply.",
+      badge: "Supply Chain",
+      img: "/images/2013.jpeg"
     },
     {
       year: "2014",
-      title: "Capability Shift",
-      desc: "Transitioned from supply to in-house manufacturing. We did not jump into production immediately; capabilities were built step-by-step.",
-      badge: "Manufacturing",
-      img: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format"
+      title: "Biomedical Consultancy",
+      desc: "Started designing new hospital project services & biomedical consultancy.",
+      badge: "Consultancy",
+      img: "/images/2014.jpeg"
+    },
+    {
+      year: "2015",
+      title: "Geographic Expansion",
+      desc: "Vida brand reached almost every district of Maharashtra State along with projects in Karnataka, North region, Telangana, Madhya Pradesh, Gujarat, Muscat and Malaysia.",
+      badge: "Global Reach",
+      img: "/images/2015.jpeg"
     },
     {
       year: "2016",
-      title: "Research & Reach",
-      desc: "Established a dedicated R&D department after field experience. Expanded geographic presence across Maharashtra and overseas.",
-      badge: "Expansion",
-      img: "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?q=80&w=800&auto=format"
+      title: "R&D Inception",
+      desc: "Started its own Research & Development department to develop new CSSD equipment.",
+      badge: "R&D",
+      img: "/images/2016.jpeg"
+    },
+    {
+      year: "2017",
+      title: "National Excellence",
+      desc: "Vida was awarded the Fastest Growing Indian Company Excellence Award at International Achievers Conference.",
+      badge: "Award",
+      img: "/images/2017.jpeg"
+    },
+    {
+      year: "2018",
+      title: "Tech Innovation",
+      desc: "Vida Developed Automatic bed pan washer disinfector with its A0 value calculation.",
+      badge: "Product Dev",
+      img: "/images/2018.jpeg"
     },
     {
       year: "2019",
-      title: "Global Validation",
-      desc: "Recognized as 'Fastest Growing Indian Company'. Executed our first international CSSD setup in South Africa (Congo).",
-      badge: "Recognition",
-      img: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=800&auto=format"
+      title: "International Breakthrough",
+      desc: "Vida got a breakthrough in 1st international CSSD set up in South Africa - Congo.",
+      badge: "Global",
+      img: "/images/2019.jpeg"
+    },
+    {
+      year: "2020",
+      title: "Pandemic Resilience",
+      desc: "Vida has struggle a lot, coz of Covid effect, but still successfully done installation in Manipur- Imphal with huge challenges at American oncology centre.",
+      badge: "Resilience",
+      img: "/images/2020.jpeg"
     },
     {
       year: "2021",
-      title: "Crisis Resilience",
-      desc: "Demonstrated operational resilience during COVID-19. Completed critical installations in Imphal and gained government sector trust.",
-      badge: "Resilience",
-      img: "/images/Crisis Resilienceimg.avif"
+      title: "Government Partnerships",
+      desc: "Vida moved on with many successful orders for CSSD in government sector too.",
+      badge: "Public Sector",
+      img: "/images/2021.jpeg"
+    },
+    {
+      year: "2022",
+      title: "Advanced Engineering",
+      desc: "Vida has newly added double door instrument washer cum dryer.",
+      badge: "Technology",
+      img: "/images/2022.jpeg"
+    },
+    {
+      year: "2023",
+      title: "Infrastructure Scaling",
+      desc: "Vida continuing with many CSSD projects including govt. Medical colleges.",
+      badge: "Scaling",
+      img: "/images/2023.jpeg"
+    },
+    {
+      year: "2024",
+      title: "Scientific Validation",
+      desc: "Vida Publish research article on A0 Concept in an international journal Scopus Indexed….and many products under development phases for ICU and Dental too…….",
+      badge: "Research",
+      img: "/images/2024.jpeg"
     },
     {
       year: "2025",
-      title: "Maturity Peak",
-      desc: "First patent granted and Scopus-indexed research published. Vida stands as an innovator in sterilization technology.",
-      badge: "Innovation",
-      img: "/images/Maturity Peakimg.avif"
+      title: "Patent & Leadership",
+      desc: "1) Vida Lifesciences Pvt Ltd received its first patent! 2) Vida unveil the next generation of automated instrument care. 3) Introduced Advanced-Technology Automatic Vertical Sliding Door Steam Sterilizer. 4) Dr. Onkar Yadav earned his doctorate in Healthcare Infection Control and Prevention.",
+      badge: "Milestone",
+      img: "/images/2025.jpeg"
     }
   ];
 

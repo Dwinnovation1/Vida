@@ -95,13 +95,13 @@ const ScaleSection = () => {
             </motion.div>
           ))}
         </div>
-{/* --- PART 2: THE CTA (Brochure Button Removed) --- */}
+
+        {/* --- PART 2: THE CTA --- */}
         <motion.div 
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          // CHANGED: Added 'mt-32 lg:mt-48' to create the gap above the block
           className="relative w-full bg-slate-900 rounded-t-3xl overflow-hidden px-8 lg:px-16 py-24 flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-20 mt-32 lg:mt-48"
         >
           {/* Background Decoration */}
@@ -119,14 +119,18 @@ const ScaleSection = () => {
           </div>
 
           <div className="relative z-10 flex flex-col sm:flex-row gap-4 shrink-0">
-              <a href="/contact" className="px-10 py-5 bg-sky-600 text-white font-bold rounded hover:bg-sky-500 transition-all duration-300 flex items-center justify-center gap-3 shadow-lg shadow-sky-900/50 text-lg">
+              {/* CHANGED: href is now set to tel:+91... to trigger phone dialer */}
+              <a 
+                href="tel:+919689491632" 
+                className="px-10 py-5 bg-sky-600 text-white font-bold rounded hover:bg-sky-500 transition-all duration-300 flex items-center justify-center gap-3 shadow-lg shadow-sky-900/50 text-lg"
+              >
                 <Phone size={22} />
                 Schedule an Audit
               </a>
           </div>
 
         </motion.div>
-</div>
+      </div>
         
     </section>
   );

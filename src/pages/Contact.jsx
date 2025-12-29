@@ -130,11 +130,17 @@ const Contact = () => {
                 <MapPin className="text-sky-600 w-6 h-6" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-sky-800 mb-1">Business Address</h3>
+                <h3 className="text-xl font-bold text-sky-800 mb-1">Office Address</h3>
                 <p className="text-slate-600 leading-relaxed">
                   4, Shriyash, Attrey Society,<br />
                   Opp. Sapna Hotel, Gokhalenagar Road,<br />
                   Pune 411016
+                </p>
+                <h3 className="text-xl font-bold text-sky-800 mb-1">Factory Address</h3>
+                <p className="text-slate-600 leading-relaxed">
+                  
+                  
+                  Vida life science Factory,<br /> Gujarwadi Rd, Katrajnagar, Katraj,<br /> Pune, Maharashtra 411046
                 </p>
               </div>
             </div>
@@ -179,7 +185,7 @@ const Contact = () => {
             {/* Clip Holder */}
             <div className="w-full flex justify-center -mb-6 relative z-10">
               <img 
-                src="/images/paperclip contactpage.avif" 
+                src="/images/clip-removebg-preview.png" 
                 alt="clip" 
                 className="w-24 drop-shadow-md"
               />

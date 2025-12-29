@@ -6,7 +6,7 @@ import FoundationSection from '../components/home/Foundationsection'; // Make su
 import TechnicalCapability from '../components/home/TechnicalCapability';
 import ScaleSection from '../components/home/ScaleSection';
 import NetworkMap from '../components/home/NetworkMap';
-
+import Infrastructure from '../components/home/Infrastructure';
 
 const Home = () => {
   return (
@@ -16,7 +16,7 @@ const Home = () => {
       <HeroSection />
       
       <FoundationSection />
-      
+      <Infrastructure />
       <TechnicalCapability />
       <NetworkMap/>
 {/* 4. Scale & CTA (New) */}
