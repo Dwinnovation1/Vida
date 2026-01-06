@@ -206,7 +206,7 @@ const Directors = () => {
                 <div className="relative w-full max-w-md aspect-[3/4] overflow-hidden rounded-lg shadow-xl bg-white">
                   <div className="absolute inset-0 border-[6px] border-white/50 z-10 pointer-events-none"></div>
                   <img 
-                    src="/images/director_02.png" 
+                    src="/images/2nd Directorimage.jpeg" 
                     alt="Mr. Dhananjay Sawant" 
                     className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-[1.5s] ease-out"
                   />
