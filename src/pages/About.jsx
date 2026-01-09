@@ -1,10 +1,10 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ShieldCheck, Target, Activity, Users, Award, Briefcase, ArrowRight, PlayCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 // --- 3D SHUTTER CARD COMPONENT ---
-const ShutterCard = ({ icon, title, desc, delay }) => {
+const ShutterCard = ({ icon, title, desc, delay, onOpen, media }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
@@ -32,9 +32,13 @@ const ShutterCard = ({ icon, title, desc, delay }) => {
 
         {/* ARROW ICON (Appears on Hover) */}
         <div className="mt-auto pt-8 flex justify-end opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 delay-100">
-           <div className="p-2 bg-white/20 rounded-full text-white">
+           <button
+             onClick={() => onOpen && onOpen(media)}
+             className="p-2 bg-white/20 rounded-full text-white focus:outline-none"
+             aria-label={`Open media for ${title}`}
+           >
              <ArrowRight size={20} />
-           </div>
+           </button>
         </div>
       </div>
     </motion.div>
@@ -43,6 +47,8 @@ const ShutterCard = ({ icon, title, desc, delay }) => {
 
 const About = () => {
   const videoRef = useRef(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalMedia, setModalMedia] = useState({ video: '/aboutbg.mp4', image: '/aboutsafety.jpeg' });
   const { scrollYProgress } = useScroll({
     target: videoRef,
     offset: ["start end", "end start"]
@@ -212,27 +218,57 @@ const About = () => {
 
           {/* Cards Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <ShutterCard 
+            <ShutterCard
                delay={0}
                icon={<Briefcase size={32} />}
                title="CSSD Manufacturing"
                desc="Manufacturing of medical devices, CSSD equipment, and SS 304/316L hospital furniture."
+               media={{ video: '/aboutbg.mp4', image: '/aboutsafety.jpeg' }}
+               onOpen={(m) => { setModalMedia(m); setModalOpen(true); }}
             />
-            <ShutterCard 
+            <ShutterCard
                delay={0.2}
                icon={<Activity size={32} />}
                title="Turnkey Projects"
                desc="End-to-end CSSD project planning, design, and implementation for hospitals."
+               media={{ video: '/aboutbg.mp4', image: '/aboutsafety.jpeg' }}
+               onOpen={(m) => { setModalMedia(m); setModalOpen(true); }}
             />
-            <ShutterCard 
+            <ShutterCard
                delay={0.4}
                icon={<ShieldCheck size={32} />}
                title="Operational Support"
                desc="Equipment maintenance, AMC/CMC services, and healthcare staff training."
+               media={{ video: '/aboutbg.mp4', image: '/aboutsafety.jpeg' }}
+               onOpen={(m) => { setModalMedia(m); setModalOpen(true); }}
             />
           </div>
         </div>
       </section>
+
+      {/* Media Modal */}
+      {modalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+          <div className="bg-white rounded-2xl max-w-5xl w-[95%] max-h-[90vh] overflow-auto p-6 relative">
+            <button
+              onClick={() => setModalOpen(false)}
+              className="absolute top-4 right-4 bg-slate-100 rounded-full p-2"
+              aria-label="Close media modal"
+            >
+              ✕
+            </button>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="w-full h-60 md:h-[400px] bg-black rounded-lg overflow-hidden">
+                <video src={modalMedia.video} controls className="w-full h-full object-cover" />
+              </div>
+              <div className="w-full h-60 md:h-[400px] bg-slate-100 rounded-lg overflow-hidden flex items-center justify-center">
+                <img src={modalMedia.image} alt="Media" className="w-full h-full object-cover" />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* --- 4. VIDEO SECTION (Separate Section Below What We Do) --- */}
       <section ref={videoRef} className="w-full bg-slate-50 pb-32 overflow-hidden">

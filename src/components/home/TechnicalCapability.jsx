@@ -21,8 +21,8 @@ const TechnicalCapability = () => {
   const steps = [
     {
       id: "01",
-      title: "Decontamination",
-      desc: "Removal of bio-burden using automated washer-disinfectors and enzymatic detergents in the dirty zone.",
+      title: "Collection & Sorting:",
+      desc: "Used instruments are gathered from clinical areas, sorted by type, and transported to the CSSD receiving (dirty) area.",
       icon: <Waves size={32} />,
       color: "text-blue-600",
       bg: "bg-blue-50",
@@ -30,8 +30,8 @@ const TechnicalCapability = () => {
     },
     {
       id: "02",
-      title: "Ultrasonic Cleaning",
-      desc: "High-frequency sound waves create cavitation to remove microscopic debris from complex instrument crevices.",
+      title: "Pre-Disinfection:",
+      desc: " Immediate rinsing or soaking at the point of use and in CSSD to prevent organic matter from drying on instruments.",
       icon: <Zap size={32} />,
       color: "text-amber-500",
       bg: "bg-amber-50",
@@ -39,8 +39,8 @@ const TechnicalCapability = () => {
     },
     {
       id: "03",
-      title: "Visual Inspection",
-      desc: "Digital magnification and illuminated testing to verify cleanliness and functionality before packaging.",
+      title: "Cleaning (Decontamination):",
+      desc: "A) Manual Cleaning: Disassembly and brushing instruments in enzymatic/detergent solutions.B) Automated Cleaning: Using washer-disinfectors with ultrasonic cleaning to remove biofilms.C) Rinsing: Thorough rinsing with clean, treated water.",
       icon: <Scan size={32} />,
       color: "text-purple-600",
       bg: "bg-purple-50",
@@ -48,8 +48,8 @@ const TechnicalCapability = () => {
     },
     {
       id: "04",
-      title: "Sterilization Cycle",
-      desc: "Validated Steam or Low-Temperature sterilization cycles to achieve 100% SAL.",
+      title: "Drying:",
+      desc: "Instruments are dried using air or specialized cabinets to prevent corrosion and contamination.",
       icon: <Thermometer size={32} />,
       color: "text-rose-500",
       bg: "bg-rose-50",
@@ -57,13 +57,50 @@ const TechnicalCapability = () => {
     },
     {
       id: "05",
-      title: "Sterile Storage",
-      desc: "Final packaging and storage in ISO Class 8 cleanrooms to maintain the sterile barrier until surgery.",
+      title: "Inspection & Maintenance:",
+      desc: "Checking for cleanliness, functionality (hinges, sharpness), damage, and applying lubricant if needed. Items failing inspection are rejected.",
       icon: <PackageCheck size={32} />,
       color: "text-emerald-600",
       bg: "bg-emerald-50",
       img: "/sterileimg.jpeg",
     },
+    {
+      id: "06",
+      title: "Packaging:",
+      desc: " Items are wrapped (often double-wrapped) in sterile barrier materials and labeled for traceability.",
+      icon: <PackageCheck size={32} />,
+      color: "text-emerald-600",
+      bg: "bg-emerald-50",
+      img: "/sterileimg.jpeg",
+    },
+    {
+      id: "07",
+      title: "Sterilization:",
+      desc: " Using methods like saturated steam (autoclave), ethylene oxide (ETO), or hydrogen peroxide plasma to kill all microorganisms.",
+      icon: <PackageCheck size={32} />,
+      color: "text-emerald-600",
+      bg: "bg-emerald-50",
+      img: "/sterileimg.jpeg",
+    },
+    {
+      id: "08",
+      title: "Sterile Storage:",
+      desc: " Storing packaged, sterile items in designated clean areas until needed, maintaining sterility.",
+      icon: <PackageCheck size={32} />,
+      color: "text-emerald-600",
+      bg: "bg-emerald-50",
+      img: "/sterileimg.jpeg",
+    },
+    {
+      id: "09",
+      title: "Distribution:",
+      desc: "Delivering sterile supplies to operating rooms and other departments for patient care.",
+      icon: <PackageCheck size={32} />,
+      color: "text-emerald-600",
+      bg: "bg-emerald-50",
+      img: "/sterileimg.jpeg",
+    },
+    
   ];
 
   // --- AUTO PLAY ---
@@ -98,7 +135,7 @@ const TechnicalCapability = () => {
               The Protocol
             </div>
             <h3 className="text-3xl lg:text-4xl font-bold text-slate-900">
-              5-Stage Safety Cycle
+              The CSSD Workflow Stages:
             </h3>
           </div>
 

@@ -27,7 +27,7 @@ import AutomatedBedPan from './pages/products/AutomatedBedPan';
 import ManualBedPan from './pages/products/ManualBedPan';
 import HospitalUtility from './pages/products/HospitalUtility';
 import Cssdequipment from './pages/products/Cssdequipment';
-
+import Sterilizer from './pages/products/Sterilizer';
 function App() {
   const [isLoading, setIsLoading] = useState(true);
 
@@ -68,6 +68,7 @@ function App() {
                 <Route path="/directors/dr-onkar-yadav" element={<DirectorProfileDrYadav />} />
                 
                 {/* Product Routes */}
+                <Route path="/products/Sterilizer" element={<Sterilizer/>} />
                 <Route path="/products/Cssdequipment" element={<Cssdequipment/>} />
                 <Route path="/products/CSSDFurniture" element={< CSSDFurniture/>} />
                 <Route path="/products/AutomatedBedPan" element={<AutomatedBedPan />} />

@@ -58,7 +58,7 @@ const HeroSection = () => {
             {/* 1. Small Badge */}
             <motion.div variants={itemVariants} className="mb-6">
                <span className="px-4 py-1.5 rounded-full border border-sky-400/30 bg-sky-500/10 text-sky-300 text-xs font-bold tracking-[0.2em] uppercase backdrop-blur-md">
-                 Licensed Manufacturer • MFG/MD/2023
+                 Licensed Manufacturer.
                </span>
             </motion.div>
 

@@ -58,7 +58,7 @@ const Infrastructure = () => {
             transition={{ delay: 0.3 }}
             className="text-slate-400 max-w-sm mt-6 md:mt-0 text-lg leading-relaxed"
           >
-            A 7,000+ sq. ft. advanced fabrication facility dedicated to creating medical-grade sterilization infrastructure.
+            A 30000+ sq. ft. advanced fabrication facility dedicated to creating medical-grade sterilization infrastructure.
           </motion.p>
         </div>
 
@@ -104,7 +104,7 @@ const Infrastructure = () => {
             
             <div className="mt-12">
                <div className="text-6xl font-bold text-white tracking-tighter mb-2">
-                 7k<span className="text-sky-500 text-4xl">+</span>
+                 30k<span className="text-sky-500 text-4xl">+</span>
                </div>
                <div className="text-sm font-bold uppercase tracking-widest text-slate-400 mb-2">Square Feet</div>
                <p className="text-slate-400 text-sm leading-relaxed">

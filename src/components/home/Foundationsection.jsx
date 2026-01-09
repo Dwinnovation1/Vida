@@ -137,11 +137,7 @@ const FoundationSection = () => {
                      <div className="bg-sky-50 p-4 rounded-full text-sky-600">
                         <Activity size={28} />
                      </div>
-                     <div>
-                        <p className="text-slate-400 text-[10px] font-bold uppercase tracking-wider mb-1">Daily Throughput</p>
-                        <p className="text-slate-900 text-3xl font-bold leading-none">50k+</p>
-                        <p className="text-slate-500 text-xs mt-1 font-medium">Surgical Instruments</p>
-                     </div>
+                     
                   </div>
                </motion.div>
 

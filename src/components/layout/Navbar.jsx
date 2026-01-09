@@ -36,9 +36,10 @@ const Navbar = () => {
 
   // 2. Product Dropdown Data
   const productSublinks = [
+    { name: "Sterilizer", path: "/products/Sterilizer"},
     { name: "CSSD Equipment’s", path: "/products/Cssdequipment" },
     { name: "CSSD SS Furniture", path: "/products/CSSDFurniture" },
-    { name: "Automatic Bed Pan Washer", path: "/products/AutomatedBedPan" },
+    { name: "Automatic Bed Pan Washer (Patented)", path: "/products/AutomatedBedPan" },
     { name: "Manual Bed Pan Washer", path: "/products/ManualBedPan" },
     { name: "Hospital SS Furniture", path: "/products/HospitalUtility" },
   ];
